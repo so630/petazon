@@ -1,0 +1,43 @@
+.business-card {
+  width: 365px;
+  height: 422px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  display: inline-block;
+  margin-right: 40px;
+  margin-left: 40px;
+}
+
+.blur-background {
+  backdrop-filter: blur(4px);
+  height: 422px;
+  text-align: center;
+  padding-top: 40px;
+}
+
+.blur-background > h1 {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 40px;
+  line-height: 47px;
+  text-align: center;
+
+  color: #F05454;
+}
+
+.blur-background > p {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 25px;
+  line-height: 29px;
+  text-align: center;
+
+  color: #000000;
+}
+
+.blur-background > .btn {
+  margin-top: 40%;
+}

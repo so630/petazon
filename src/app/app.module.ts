@@ -8,6 +8,10 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { HeroComponent } from './landing-page/hero/hero.component';
 import { NavbarComponent } from './landing-page/hero/navbar/navbar.component';
 import { FeaturesComponent } from './landing-page/features/features.component';
+import { CardComponent } from './landing-page/features/card/card.component';
+import { BusinessesComponent } from './landing-page/businesses/businesses.component';
+import { BussinessCardComponent } from './landing-page/businesses/bussiness-card/bussiness-card.component';
+import { FooterComponent } from './landing-page/footer/footer.component';
 
 const routes: Routes = [
   {path: '', component: LandingPageComponent}
@@ -19,7 +23,11 @@ const routes: Routes = [
     LandingPageComponent,
     HeroComponent,
     NavbarComponent,
-    FeaturesComponent
+    FeaturesComponent,
+    CardComponent,
+    BusinessesComponent,
+    BussinessCardComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

@@ -1,19 +1,11 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Feature} from "./feature.model";
+import {Component, OnInit, ViewChild, ElementRef, AfterViewInit} from '@angular/core';
 
 @Component({
-  selector: 'app-features',
-  templateUrl: './features.component.html',
-  styleUrls: ['./features.component.css']
+  selector: 'app-businesses',
+  templateUrl: './businesses.component.html',
+  styleUrls: ['./businesses.component.css']
 })
-export class FeaturesComponent implements OnInit, AfterViewInit {
-
-  features: Feature[] = [
-    new Feature('Marketplace for Pets', 'assets/images/shop.png'),
-    new Feature('Find Nearby Vets', 'assets/images/doctor.png'),
-    new Feature('Find if your pet is sick', 'assets/images/health.png'),
-    new Feature('Find other Pet Enthusiasts', 'assets/images/dog.png')
-  ]
+export class BusinessesComponent implements OnInit, AfterViewInit {
 
   @ViewChild('business') business: ElementRef;
 

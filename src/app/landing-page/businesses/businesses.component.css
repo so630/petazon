@@ -1,0 +1,17 @@
+#businesses {
+  margin-top: 250px;
+  text-align: center;
+  margin-bottom: 100px;
+}
+
+.business {
+  position: relative;
+  bottom: 50px;
+  opacity: 0;
+}
+
+.open {
+  bottom: 0;
+  opacity: 1;
+  transition: 1s ease;
+}
