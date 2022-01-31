@@ -1,0 +1,88 @@
+.btn {
+  width: 158px;
+  height: 47px;
+  font-weight: 700;
+  color: white;
+  font-size: 24px;
+  border-radius: 6px;
+
+
+}
+
+.hero-img {
+  position: relative;
+  top: 0;
+  z-index: 1;
+}
+
+.header {
+  width: 100%;
+
+  height: 100%;
+  color: white;
+  backdrop-filter: blur(5px);
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 15% 5% 20px 60%;
+
+}
+
+.header > div > .btn {
+  margin-top: 20px;
+  padding-bottom: 5px;
+}
+
+.header > div > h1 {
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 58px;
+  line-height: 68px;
+}
+
+.header > div > p {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.header-card {
+  position: relative;
+  right: 10%;
+  opacity: 0;
+}
+
+.open {
+  opacity: 1;
+  right: 0;
+  transition: 1s ease;
+}
+
+.header-card > h1 {
+  position: relative;
+  right: -10%;
+  opacity: 0;
+}
+
+.open > h1 {
+  right: 0;
+  opacity: 1;
+  transition: 1s ease-in;
+}
+
+.open > p {
+  right: 0;
+  opacity: 1;
+  transition: 1s ease-in;
+}
+
+.signup {
+  background-color: #F05454;
+}
+
+.login {
+  background-color: #4580BB;
+  margin-left: 10px;
+}

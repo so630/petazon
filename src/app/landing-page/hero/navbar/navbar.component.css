@@ -1,0 +1,28 @@
+.signup {
+  background-color: #F05454;
+}
+
+.login {
+  background-color: #4580BB;
+  margin-left: 10px;
+}
+
+.btn {
+  width: 158px;
+  height: 47px;
+  font-weight: 700;
+  color: white;
+  font-size: 24px;
+  border-radius: 6px;
+}
+
+.navbar {
+  position: absolute;
+  top: 0;
+  z-index: 2;
+  width: 98vw;
+}
+
+.logo-img {
+  width: 250px;
+}

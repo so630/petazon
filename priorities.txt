@@ -1,0 +1,13 @@
+
+Core:
+  Marketplace for pets
+    Recommender Systems
+    Items for pets
+    Support businesses
+
+  Google Maps API:
+    Finding nearby pet owners
+    Finding nearby parks to walk the pet
+    Finding nearby vets
+    Using classification to check if pet is ok
+    Texting with vets to find out what is wrong with the pet
