@@ -1,0 +1,57 @@
+.sidebar {
+  width: 15%;
+  height: 100%;
+  display: inline-block;
+
+  position: absolute;
+
+  background: #fff;
+}
+
+.sidebar-item {
+  width: 100%;
+  background-color: #fff;
+
+  text-align: left;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.selected {
+  background-color: #f5f5f5;
+}
+
+.sidebar-item > h1 {
+  margin-left: 30px;
+
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 29px;
+  line-height: 34px;
+}
+
+h1.title {
+  margin-left: 42px;
+  margin-top: 21px;
+
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 53px;
+}
+
+.list {
+  width: 85%;
+  height: 100vh;
+  float: right;
+  display: inline-block;
+
+  background-color: #f5f5f5;
+
+  overflow: scroll;
+}
+
+.cards {
+  margin-top: 100px;
+}

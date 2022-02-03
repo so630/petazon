@@ -1,0 +1,33 @@
+<h1 class="text-5xl text-center mt-64 font-bold">Register</h1>
+
+<div class="w-full max-w-xs ml-auto mr-auto mt-10">
+  <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" (ngSubmit)="onSubmit()" #f="ngForm">
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+        Name
+      </label>
+      <input [class]="usernameClasses" id="name" ngModel name="name" type="text" required placeholder="Name" #name="ngModel">
+    </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+        Username
+      </label>
+      <input [class]="usernameClasses" id="username" ngModel name="username" type="email" email required placeholder="Email..." #email="ngModel">
+    </div>
+    <div class="mb-6">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+        Password
+      </label>
+      <input [class]="passwordClasses" id="password" ngModel name="password" type="password" required #password="ngModel" placeholder="***********">
+      <p class="text-red-500 text-xs" *ngIf="!password.valid && password.touched">choose a password.</p>
+    </div>
+    <div class="flex items-center justify-between">
+      <button class="ml-auto mr-auto bg-blue-500 hover:bg-blue-700 active:bg-blue-800 disabled:hover:bg-blue-300 disabled:cursor-not-allowed disabled:bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" [disabled]="!f.valid">
+        Register
+      </button>
+    </div>
+  </form>
+  <p class="text-center text-gray-500 text-xs">
+    &copy;2020 Petazon. All rights reserved.
+  </p>
+</div>

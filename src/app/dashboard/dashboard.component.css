@@ -1,0 +1,10 @@
+.header {
+  background-color: #fdd;
+  height: 320px;
+}
+
+.logo-img {
+  width: 250px;
+  margin-top: 5px;
+  display: inline;
+}

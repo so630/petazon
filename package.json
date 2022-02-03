@@ -18,8 +18,10 @@
     "@angular/platform-browser": "~13.2.0",
     "@angular/platform-browser-dynamic": "~13.2.0",
     "@angular/router": "~13.2.0",
+    "@popperjs/core": "^2.11.2",
     "@types/gsap": "^3.0.0",
     "gsap": "^3.9.1",
+    "ngx-cookie-service": "^13.1.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

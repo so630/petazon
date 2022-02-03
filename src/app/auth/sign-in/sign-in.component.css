@@ -1,0 +1,4 @@
+input.ng-invalid.ng-touched {
+  transition: 0.4s ease;
+  border-color: rgb(239 68 68 / 1);
+}
