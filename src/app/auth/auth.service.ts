@@ -18,17 +18,10 @@ export class AuthService {
       password: password
     }, {
       observe: 'response',
-      responseType: 'json'
+      responseType: 'json',
+      withCredentials: true
     }).subscribe(res => {
-      console.log(res.body)
-      // @ts-ignore
-      if (res.body.auth) {
-        // @ts-ignore
-        this.cookieService.set('session', res.body.user._id, new Date().getTime() + 2 * 60 * 60 * 1000)
-        // @ts-ignore
-        localStorage.setItem('user', JSON.stringify(res.body.user))
-        this.router.navigate(['/dashboard'])
-      }
+      this.router.navigate(['/dashboard'])
     });
   }
 
@@ -39,26 +32,38 @@ export class AuthService {
       name: name
     }, {
       observe: 'response',
-      responseType: 'json'
+      responseType: 'json',
+      withCredentials: true
     }).subscribe(res => {
       console.log(res.body);
-      // @ts-ignore
-      if (res.body.auth) {
-        // @ts-ignore
-        this.cookieService.set('session', res.body.user._id, new Date().getTime() + 2 * 60 * 60 * 1000);
-        // @ts-ignore
-        localStorage.setItem('user', JSON.stringify(res.body.user))
-        this.router.navigate(['/dashboard'])
-      }
+      this.router.navigate(['/dashboard'])
     });
 
 
   }
 
   logout() {
-    this.cookieService.delete('session')
-    localStorage.removeItem('user')
-    this.router.navigate(['/']);
+    this.http.post('http://localhost:5000/logout', {}, {
+      withCredentials: true,
+      observe: "response"
+    }).subscribe(res => {
+      this.router.navigate(['/']);
+    });
+  }
 
+  checkAuth() {
+    this.http.get('http://localhost:5000/is-authenticated', {
+      observe: 'response',
+      responseType: 'json',
+      withCredentials: true
+    }).subscribe(res => {
+      // @ts-ignore
+      if (!res.body.auth) {
+        window.location.replace('/sign-in');
+      } else {
+        // @ts-ignore
+        document.body.style = 'background-color: white;'
+      }
+    })
   }
 }

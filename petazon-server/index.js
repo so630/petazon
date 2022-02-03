@@ -78,7 +78,6 @@ app.post('/login', (req, res) => {
       passport.authenticate('local')(req, res, () => {
         User.find({username: user.username}, (err, result) => {
           let auth = req.isAuthenticated();
-          console.log(req.session)
           res.json({user: result[0], auth: auth})
         })
       })
@@ -87,7 +86,7 @@ app.post('/login', (req, res) => {
   })
 })
 
-app.post('/is-authenticated', (req, res) => {
+app.get('/is-authenticated', (req, res) => {
   console.log(req.isAuthenticated())
 
   res.json({auth: req.isAuthenticated()})
@@ -95,6 +94,7 @@ app.post('/is-authenticated', (req, res) => {
 
 app.post('/logout', (req, res) => {
   req.logout();
+  res.sendStatus(200);
 })
 
 app.listen(5000);
