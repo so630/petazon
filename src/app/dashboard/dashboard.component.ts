@@ -40,14 +40,14 @@ export class DashboardComponent implements OnInit, CanActivate {
       this.type = params['type'];
       if (this.type === 'user') {
         this.authService.checkAuth();
-        this.http.get('https://shrouded-citadel-28062.herokuapp.com/user/purchases/' + this.cookieService.get('id'), {
+        this.http.get('http://localhost:7000/user/purchases/' + this.cookieService.get('id'), {
           observe: 'response',
           responseType: 'json'
         }).subscribe(res => {
           this.ids = <{ item, id }[]>res.body;
         })
 
-        this.http.get('https://arcane-reaches-61421.herokuapp.com/todo/'+this.cookieService.get('id'), {
+        this.http.get('http://localhost:5000/todo/'+this.cookieService.get('id'), {
           observe: 'response',
           responseType: 'json'
         }).subscribe(res => {
@@ -56,7 +56,7 @@ export class DashboardComponent implements OnInit, CanActivate {
         })
       } else if (this.type === 'business') {
         this.authService.checkBusinessAuth();
-        this.http.get('https://shrouded-citadel-28062.herokuapp.com/products/business/'+this.cookieService.get('id'), {
+        this.http.get('http://localhost:7000/products/business/'+this.cookieService.get('id'), {
           observe: 'response',
           responseType: 'json'
         }).subscribe(res => {
@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit, CanActivate {
     formData.append('business_id', this.product.business_id)
     formData.append('category', this.product.category)
 
-    this.http.post('https://shrouded-citadel-28062.herokuapp.com/api/upload-product', formData, {
+    this.http.post('http://localhost:7000/api/upload-product', formData, {
       observe: 'response',
       responseType: 'json'
     }).subscribe(res => {
@@ -119,7 +119,7 @@ export class DashboardComponent implements OnInit, CanActivate {
   topup() {
     let amount = this.t.value.amount;
 
-    this.http.post('https://shrouded-citadel-28062.herokuapp.com/topup', {
+    this.http.post('https://localhost:7000/topup', {
       user_id: this.cookieService.get('id'),
       amount: amount
     }, {
@@ -140,7 +140,7 @@ export class DashboardComponent implements OnInit, CanActivate {
     let title = this.todoF.value.title;
     let type = this.todoF.value.type;
 
-    this.http.post('https://arcane-reaches-61421.herokuapp.com/todo-add', {
+    this.http.post('http://localhost:5000/todo-add', {
       user_id: user_id,
       title: title,
       date: this.date,

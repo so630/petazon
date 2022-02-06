@@ -14,7 +14,7 @@ export class SidebarComponent implements OnInit {
   constructor(private marketPlaceService: MarketplaceService, private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.http.get('https://shrouded-citadel-28062.herokuapp.com/categories', {
+    this.http.get('http://localhost:7000/categories', {
       observe: "response",
       responseType: 'json'
     }).subscribe(res => {

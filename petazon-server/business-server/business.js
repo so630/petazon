@@ -33,12 +33,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-  origin: "https://petazon.surge.sh",
+  origin: "http://localhost:4200",
   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
   credentials: true
 }))
 
-let conn = mongoose.createConnection('mongodb+srv://admin-soham:soham@cluster0.rgrzw.mongodb.net/petazonDB', {useNewUrlParser: true, useUnifiedTopology: true});
+let conn = mongoose.createConnection('mongodb://localhost:27017/petazonDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const businessSchema = new mongoose.Schema({
   username: String,
@@ -293,7 +293,7 @@ app.get('/products/:category', (req, res) => {
   })
 })
 
-mongoose.connect('mongodb+srv://admin-soham:soham@cluster0.rgrzw.mongodb.net/petazonDB')
+mongoose.connect('mongodb://localhost:27017/petazonDB')
 const User = mongoose.model('User', new mongoose.Schema({username: String, name: String, purchases: Array, password: String, balance: Number, todo: Array}))
 
 app.post('/buy', (req, res) => {
@@ -522,10 +522,6 @@ app.post('/topup', (req, res) => {
   });
 })
 
-app.get('/', (req, res) => {
-    res.json({hello: 'hello'})
-})
-
-app.listen(process.env.PORT || 7000, () => {
+app.listen(7000, () => {
   console.log('listening on port 7000')
 })

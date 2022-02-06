@@ -27,7 +27,7 @@ export class ItemCardComponent implements OnInit {
   buy() {
     let items = +prompt('Enter the amount of items you would like: ');
     console.log(items)
-    this.http.post('https://shrouded-citadel-28062.herokuapp.com/buy', {user_id: this.cookieService.get('id'), product_id: this.id, items: items}, {
+    this.http.post('http://localhost:7000/buy', {user_id: this.cookieService.get('id'), product_id: this.id, items: items}, {
       observe: 'response',
       responseType: 'text'
     }).subscribe(res => {

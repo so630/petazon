@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
-app.use(express.json());
+app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use(session({
@@ -28,12 +28,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-  origin: "https://petazon.surge.sh",
+  origin: "http://localhost:4200",
   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
   credentials: true
 }))
 
-mongoose.connect('mongodb+srv://admin-soham:soham@cluster0.rgrzw.mongodb.net/petazonDB');
+mongoose.connect('mongodb://localhost:27017/petazonDB');
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -120,6 +120,7 @@ app.post('/todo-add', (req, res) => {
   let time = req.body.time;
   let type = req.body.type;
   let todo_item;
+
   if (type === 'recurring') {
     todo_item = {title: title, time: time, type: type}
   } else {
@@ -134,7 +135,7 @@ app.post('/todo-add', (req, res) => {
       User.findByIdAndUpdate(user_id, {$set: {todo: [...result.todo, todo_item]}}, {new: true}).then((docs) => {
         if(docs) {
           console.log(docs)
-          res.json({cool: 'cool'})
+          res.json({sus: 'amogus'})
         } else {
           console.log('huh?')
         }
@@ -155,11 +156,11 @@ app.post('/delete-todo', (req, res) => {
       console.log(result)
       console.log(err)
     } else {
-      console.log(result.todo.filter((vale, index) => index != todo_index))
-      User.findByIdAndUpdate(user_id, {$set: {todo: result.todo.filter((vale, index) => index != todo_index)}}, {new: true}).then((docs) => {
+      console.log(result.todo.filter((vale, index) => index !== todo_index))
+      User.findByIdAndUpdate(user_id, {$set: {todo: result.todo.filter((vale, index) => index !== todo_index)}}, {new: true}).then((docs) => {
         if(docs) {
           console.log(docs)
-          res.json({cool: 'cool'})
+          res.json({sus: 'amogus'})
         } else {
           console.log('huh?')
         }
@@ -184,9 +185,4 @@ app.get('/todo/:id', (req, res) => {
 })
 
 
-app.get('/', (req, res) => {
-  res.json({hello: 'hello'})
-})
-
-
-app.listen(process.env.PORT || 5000);
+app.listen(5000);

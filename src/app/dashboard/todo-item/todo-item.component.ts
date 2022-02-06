@@ -21,7 +21,7 @@ export class TodoItemComponent implements OnInit {
   }
 
   delete() {
-    this.http.post('https://arcane-reaches-61421.herokuapp.com/delete-todo', {
+    this.http.post('http://localhost:5000/delete-todo', {
       index: this.index,
       user_id: this.cookieService.get('id')
     }, {

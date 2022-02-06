@@ -26,14 +26,14 @@ export class HomeComponent implements OnInit {
       this.title = this.title[0].toUpperCase() + this.title.substring(1);
       if (param['category'] === 'home') {
         // we render everything
-        this.http.get('https://shrouded-citadel-28062.herokuapp.com/products', {
+        this.http.get('http://localhost:7000/products', {
           observe: 'response',
           responseType: 'json'
         }).subscribe(res => {
           this.items = <[]>res.body;
         })
       } else {
-        this.http.get('https://shrouded-citadel-28062.herokuapp.com/products/' + param['category'], {
+        this.http.get('http://localhost:7000/products/' + param['category'], {
           observe: 'response',
           responseType: 'json'
         }).subscribe(res => {

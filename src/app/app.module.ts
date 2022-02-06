@@ -28,7 +28,7 @@ import { BusinessLoginComponent } from './auth/business-login/business-login.com
 import { SidebarComponent } from './marketplace/home/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ItemCardDashboardComponent } from './dashboard/item-card-dashboard/item-card-dashboard.component';
-import { TodoItemComponent } from './dashboard/todo-item/todo-item.component';
+import {TodoItemComponent} from "./dashboard/todo-item/todo-item.component";
 
 const routes: Routes = [
   {path: '', component: LandingPageComponent},
