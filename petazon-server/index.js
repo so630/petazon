@@ -184,4 +184,9 @@ app.get('/todo/:id', (req, res) => {
 })
 
 
+app.get('/', (req, res) => {
+  res.json({hello: 'hello'})
+})
+
+
 app.listen(process.env.PORT || 5000);

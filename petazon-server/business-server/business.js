@@ -522,6 +522,10 @@ app.post('/topup', (req, res) => {
   });
 })
 
+app.get('/', (req, res) => {
+    res.json({hello: 'hello'})
+})
+
 app.listen(process.env.PORT || 7000, () => {
   console.log('listening on port 7000')
 })
