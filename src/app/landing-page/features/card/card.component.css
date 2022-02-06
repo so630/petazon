@@ -1,7 +1,6 @@
 .card {
   width: 280px;
   background: #FFFFFF;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   text-align: center;
   display: inline-block;

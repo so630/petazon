@@ -28,7 +28,7 @@ export class ItemCardDashboardComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       if (params['type'] === 'user') {
         this.type = 'user';
-        this.http.get('http://localhost:7000/product/'+this.id, {
+        this.http.get('https://shrouded-citadel-28062.herokuapp.com/product/'+this.id, {
           observe: 'response',
           responseType: 'json'
         }).subscribe(res => {
@@ -56,7 +56,7 @@ export class ItemCardDashboardComponent implements OnInit {
 
   delete() {
     console.log(this.id)
-    this.http.post('http://localhost:7000/products/delete', {
+    this.http.post('https://shrouded-citadel-28062.herokuapp.com/products/delete', {
       product_id: this.id,
       business_id: this.cookieService.get('id')
     }, {

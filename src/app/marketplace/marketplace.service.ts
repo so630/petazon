@@ -11,7 +11,7 @@ export class MarketplaceService {
 
   buy(product_id) {
     let user_id = this.cookieService.get('id');
-    this.http.post('http://localhost:7000/buy', {
+    this.http.post('https://shrouded-citadel-28062.herokuapp.com/buy', {
       user_id: user_id,
       product_id: product_id
     }, {

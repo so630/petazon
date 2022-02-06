@@ -10,7 +10,7 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
-app.use(express.json())
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use(session({
@@ -28,12 +28,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors({
-  origin: "http://localhost:4200",
+  origin: "https://petazon.surge.sh",
   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
   credentials: true
 }))
 
-mongoose.connect('mongodb://localhost:27017/petazonDB');
+mongoose.connect('mongodb+srv://admin-soham:soham@cluster0.rgrzw.mongodb.net/petazonDB');
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -116,10 +116,15 @@ app.post('/todo-add', (req, res) => {
   let user_id = req.body.user_id;
   user_id = user_id.substring(3, user_id.length-1);
   let title = req.body.title;
-  let date = new Date(JSON.parse(req.body.date));
+  let date = req.body.date;
+  let time = req.body.time;
   let type = req.body.type;
   let todo_item;
-  todo_item = {title: title, time: date, type: type}
+  if (type === 'recurring') {
+    todo_item = {title: title, time: time, type: type}
+  } else {
+    todo_item = {title: title, time: time, date: date, type: type}
+  }
 
   User.findById(user_id, (err, result) => {
     if (err || result === null) {
@@ -129,7 +134,7 @@ app.post('/todo-add', (req, res) => {
       User.findByIdAndUpdate(user_id, {$set: {todo: [...result.todo, todo_item]}}, {new: true}).then((docs) => {
         if(docs) {
           console.log(docs)
-          res.sendStatus(200)
+          res.json({cool: 'cool'})
         } else {
           console.log('huh?')
         }
@@ -143,17 +148,18 @@ app.post('/todo-add', (req, res) => {
 app.post('/delete-todo', (req, res) => {
   let todo_index = req.body.index;
   let user_id = req.body.user_id;
+  user_id = user_id.substring(3, user_id.length-1);
 
   User.findById(user_id, (err, result) => {
     if (err || result === null) {
       console.log(result)
       console.log(err)
     } else {
-      console.log(result.todo.filter((vale, index) => index !== todo_index))
-      User.findByIdAndUpdate(user_id, {$set: {todo: result.todo.filter((vale, index) => index !== todo_index)}}, {new: true}).then((docs) => {
+      console.log(result.todo.filter((vale, index) => index != todo_index))
+      User.findByIdAndUpdate(user_id, {$set: {todo: result.todo.filter((vale, index) => index != todo_index)}}, {new: true}).then((docs) => {
         if(docs) {
           console.log(docs)
-          res.sendStatus(200)
+          res.json({cool: 'cool'})
         } else {
           console.log('huh?')
         }
@@ -164,5 +170,18 @@ app.post('/delete-todo', (req, res) => {
   })
 })
 
+app.get('/todo/:id', (req, res) => {
+  let user_id = req.params.id;
+  user_id = user_id.substring(3, user_id.length-1);
 
-app.listen(5000);
+  User.findById(user_id, (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.json({todo: result.todo})
+    }
+  })
+})
+
+
+app.listen(process.env.PORT || 5000);

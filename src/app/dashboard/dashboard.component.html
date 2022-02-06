@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="bg-transparent xl:inline-block block xl:absolute xl:top-0 xl:ml-2 xl:mt-0 relative w-full xl:w-2/5">
-        <div class="bg-white rounded-t rounded-b mt-4 xl:mt-0 p-6 xl:w-full w-6/12 inline-block xl:block drop-shadow-md" style="height: 30.6rem" *ngIf="type === 'user'">
+        <div class="bg-white w-7/12 rounded-t rounded-b mt-4 xl:mt-0 p-6 xl:w-full inline-block xl:block drop-shadow-md" style="height: 30.6rem" *ngIf="type === 'user'">
           <h6 class="text-blueGray-700 text-xs font-semibold mb-0">TOPUP</h6>
           <h1 class="text-white text-xl font-semibold" style="color: rgb(0,0,0);">Topup Your Balance</h1>
           <form #t="ngForm" class="mt-4 h-4/5 relative" (submit)="topup()">
@@ -26,9 +26,47 @@
             </button>
           </form>
         </div>
-        <div routerLink="/marketplace/home" class="xl:w-full w-5/12 hover:cursor-pointer hover:bg-gray-100 active:bg-gray-200 ml-8 transition-all xl:ml-0 bg-white rounded-t rounded-b xl:mt-4 p-6 inline-block xl:inline-block xl:mt-0 drop-shadow-md" *ngIf="type === 'user'">
+        <div routerLink="/marketplace/home" class="xl:w-full w-5/12 hover:cursor-pointer hover:bg-gray-100 active:bg-gray-200 ml-8 transition-all xl:ml-0 bg-white xl:static rounded-t absolute bottom-0 -right-5 rounded-b xl:mt-4 p-6 inline-block xl:inline-block xl:mt-0 drop-shadow-md" *ngIf="type === 'user'">
           <h6 class="text-blueGray-700 text-xs font-semibold mb-0">MARKETPLACE</h6>
           <h1 class="text-white text-xl font-semibold" style="color: rgb(0,0,0);">Go To Marketplace</h1>
+        </div>
+      </div>
+      <div *ngIf="type === 'user'">
+        <div class="bg-white p-6 max-h-80 drop-shadow-md w-2/3 mt-4 rounded-b rounded-t text-center py-4 overflow-y-auto inline-block">
+          <h6 class="text-blueGray-700 text-xs font-semibold mb-0 text-left">DOG PLANNER</h6>
+          <h1 class="text-white text-xl font-semibold text-left mb-4" style="color: rgb(0,0,0);">Check What You Have To Do</h1>
+          <app-todo-item [title]="t.title" [date]="t.date" [time]="t.time" [type]="t.type" [index]="i" *ngFor="let t of todo; let i = index"></app-todo-item>
+
+          <hr>
+          <div class="text-left">
+            <a href="https://petazon-dog-sick-ml.surge.sh/" class="inline-block hover:cursor-pointer select-none w-fit mt-4 bg-blue-500 hover:bg-blue-700 active:bg-blue-800 disabled:hover:bg-blue-300 disabled:cursor-not-allowed disabled:bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Check Your Dog's Health!
+            </a>
+            <a href="https://petazon-dog-ml.surge.sh/" class="ml-4 inline-block hover:cursor-pointer select-none w-fit mt-4 bg-blue-500 hover:bg-blue-700 active:bg-blue-800 disabled:hover:bg-blue-300 disabled:cursor-not-allowed disabled:bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+              Get Help to Train Your Dog!
+            </a>
+          </div>
+        </div>
+        <div class="bg-white min-h-20 p-6 align-top relative left-5 drop-shadow-md w-1/3 mt-4 rounded-b rounded-t py-4 overflow-y-auto inline-block">
+          <h1 class="text-white text-xl font-semibold text-left mb-0" style="color: rgb(0,0,0);">FORM</h1>
+          <h6 class="text-blueGray-700 text-xs font-semibold mb-4 text-left uppercase">Add Something To Your Pets Busy Schedule</h6>
+          <form (submit)="todoSubmit()" #todoF="ngForm">
+            <label for="date" class="block text-left text-black text-md font-bold mb-2 mt-4">Enter the Type: </label>
+            <select name="type" id="type" class="focus:outline focus:border-none border-2 border-gray-700 h-8 rounded-full px-2" required ngModel #typeSelector>
+              <option value="recurring">Recurring</option>
+              <option value="once">Once</option>
+            </select>
+            <label for="date" class="block text-left text-black text-md font-bold mb-2 mt-4">Enter the Date: </label>
+            <input type="date" id="date" name="date" class="focus:outline-none px-2 py-1 rounded disabled:cursor-not-allowed" (change)="handleDate($event)" [required]="typeSelector.value === 'recurring' || typeSelector.value === ''" [disabled]="typeSelector.value === 'recurring' || typeSelector.value === ''" ngModel>
+            <label for="time" class="block text-left text-black text-md font-bold mb-2 mt-4">Enter the time: </label>
+            <input type="time" id="time" name="time" value="now" class="focus:outline-none block px-2 py-1 rounded" (change)="handleTime($event)" required ngModel>
+            <label for="date" class="block text-left text-black text-md font-bold mb-2 mt-4">Enter the Title: </label>
+            <input type="text" id="title" name="title" class="resize-none outline-2 outline-gray-700 border-2 focus:border focus:border-gray-700 text-gray-700 rounded-b rounded-t py-1 px-2 focus:outline-none focus:outline-blue-500 focus:transition-all w-2/5 overflow-x-auto" required ngModel #name="ngModel">
+
+            <button class="block mt-4 ml-auto bg-blue-500 hover:bg-blue-700 active:bg-blue-800 disabled:hover:bg-blue-300 disabled:cursor-not-allowed disabled:bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" [disabled]="!todoF.valid">
+              Add
+            </button>
+          </form>
         </div>
       </div>
       <div class="products-form p-8 mt-8 mb-8 relative w-full xl:w-4/5" *ngIf="type === 'business'">

@@ -13,7 +13,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router, private cookieService: CookieService) {}
 
   login(username, password) {
-    this.http.post('http://localhost:5000/login', {
+    this.http.post('https://arcane-reaches-61421.herokuapp.com/login', {
       username: username,
       password: password
     }, {
@@ -26,7 +26,7 @@ export class AuthService {
   }
 
   loginBusiness(username, password) {
-    this.http.post('http://localhost:7000/business-login', {
+    this.http.post('https://shrouded-citadel-28062.herokuapp.com/business-login', {
       username: username,
       password: password
     }, {
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   register(username, password, name) {
-    this.http.post('http://localhost:5000/register', {
+    this.http.post('https://arcane-reaches-61421.herokuapp.com/register', {
       username: username,
       password: password,
       name: name
@@ -55,7 +55,7 @@ export class AuthService {
   }
 
   registerBusiness(username, password, name) {
-    this.http.post('http://localhost:7000/business-register', {
+    this.http.post('https://shrouded-citadel-28062.herokuapp.com/business-register', {
       username: username,
       password: password,
       name: name
@@ -70,7 +70,7 @@ export class AuthService {
   }
 
   logout() {
-    this.http.post('http://localhost:5000/logout', {}, {
+    this.http.post('https://arcane-reaches-61421.herokuapp.com/logout', {}, {
       withCredentials: true,
       observe: "response"
     }).subscribe(res => {
@@ -79,7 +79,7 @@ export class AuthService {
   }
 
   checkBusinessAuth() {
-    this.http.get('http://localhost:7000/business-authenticated', {
+    this.http.get('https://shrouded-citadel-28062.herokuapp.com/business-authenticated', {
       observe: 'response',
       responseType: 'json',
       withCredentials: true
@@ -95,7 +95,7 @@ export class AuthService {
   }
 
   checkAuth() {
-    this.http.get('http://localhost:5000/is-authenticated', {
+    this.http.get('https://arcane-reaches-61421.herokuapp.com/is-authenticated', {
       observe: 'response',
       responseType: 'json',
       withCredentials: true
@@ -111,7 +111,7 @@ export class AuthService {
   }
 
   businessLogout() {
-    this.http.post('http://localhost:7000/business-logout', {}, {
+    this.http.post('https://shrouded-citadel-28062.herokuapp.com/business-logout', {}, {
       withCredentials: true,
       observe: "response"
     }).subscribe(res => {

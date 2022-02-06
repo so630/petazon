@@ -1,4 +1,11 @@
-<div class="card">
+<a [href]="link" *ngIf="link !== '#features'">
+  <div class="card shadow-lg hover:drop-shadow-2xl transition-all">
+    <img [src]="imageStr" alt="">
+    <h1>{{ title }}</h1>
+  </div>
+</a>
+
+<div class="card shadow-lg hover:drop-shadow-2xl transition-all" *ngIf="link === '#features'">
   <img [src]="imageStr" alt="">
   <h1>{{ title }}</h1>
 </div>

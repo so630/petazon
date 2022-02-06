@@ -19,7 +19,7 @@ export class HeaderStatsComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.type === 'business') {
-      this.http.get('http://localhost:7000/sales/' + this.cookieService.get('id'), {
+      this.http.get('https://shrouded-citadel-28062.herokuapp.com/sales/' + this.cookieService.get('id'), {
         observe: 'response',
         responseType: 'json'
       }).subscribe(res => {
@@ -33,7 +33,7 @@ export class HeaderStatsComponent implements OnInit {
 
       })
 
-      this.http.get('http://localhost:7000/revenue/' + this.cookieService.get('id'), {
+      this.http.get('https://shrouded-citadel-28062.herokuapp.com/revenue/' + this.cookieService.get('id'), {
         observe: 'response',
         responseType: 'json'
       }).subscribe(res => {
@@ -41,7 +41,7 @@ export class HeaderStatsComponent implements OnInit {
         this.revenue = res.body.revenue;
       })
     } else {
-      this.http.get('http://localhost:7000/user/data/' + this.cookieService.get('id'), {
+      this.http.get('https://shrouded-citadel-28062.herokuapp.com/user/data/' + this.cookieService.get('id'), {
         observe: 'response',
         responseType: 'json'
       }).subscribe(res => {

@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit, CanActivate {
   type: string;
   products: {name, desc, image_name, price, sales, _id, business_id}[];
   ids: { item, id }[];
+  todo: any[];
 
 
   constructor(private authService: AuthService, private http: HttpClient, private router: Router, private cookieService: CookieService, private route: ActivatedRoute) { }
@@ -39,15 +40,23 @@ export class DashboardComponent implements OnInit, CanActivate {
       this.type = params['type'];
       if (this.type === 'user') {
         this.authService.checkAuth();
-        this.http.get('http://localhost:7000/user/purchases/' + this.cookieService.get('id'), {
+        this.http.get('https://shrouded-citadel-28062.herokuapp.com/user/purchases/' + this.cookieService.get('id'), {
           observe: 'response',
           responseType: 'json'
         }).subscribe(res => {
           this.ids = <{ item, id }[]>res.body;
         })
+
+        this.http.get('https://arcane-reaches-61421.herokuapp.com/todo/'+this.cookieService.get('id'), {
+          observe: 'response',
+          responseType: 'json'
+        }).subscribe(res => {
+          // @ts-ignore
+          this.todo = res.body.todo;
+        })
       } else if (this.type === 'business') {
         this.authService.checkBusinessAuth();
-        this.http.get('http://localhost:7000/products/business/'+this.cookieService.get('id'), {
+        this.http.get('https://shrouded-citadel-28062.herokuapp.com/products/business/'+this.cookieService.get('id'), {
           observe: 'response',
           responseType: 'json'
         }).subscribe(res => {
@@ -91,7 +100,7 @@ export class DashboardComponent implements OnInit, CanActivate {
     formData.append('business_id', this.product.business_id)
     formData.append('category', this.product.category)
 
-    this.http.post('http://localhost:7000/api/upload-product', formData, {
+    this.http.post('https://shrouded-citadel-28062.herokuapp.com/api/upload-product', formData, {
       observe: 'response',
       responseType: 'json'
     }).subscribe(res => {
@@ -110,7 +119,7 @@ export class DashboardComponent implements OnInit, CanActivate {
   topup() {
     let amount = this.t.value.amount;
 
-    this.http.post('http://localhost:7000/topup', {
+    this.http.post('https://shrouded-citadel-28062.herokuapp.com/topup', {
       user_id: this.cookieService.get('id'),
       amount: amount
     }, {
@@ -120,5 +129,36 @@ export class DashboardComponent implements OnInit, CanActivate {
       // do nothing
       this.t.reset();
     })
+  }
+
+  @ViewChild('todoF') todoF: NgForm;
+  date: string;
+  time: string;
+
+  todoSubmit() {
+    let user_id = this.cookieService.get('id');
+    let title = this.todoF.value.title;
+    let type = this.todoF.value.type;
+
+    this.http.post('https://arcane-reaches-61421.herokuapp.com/todo-add', {
+      user_id: user_id,
+      title: title,
+      date: this.date,
+      time: this.time,
+      type: type
+    }, {
+      observe: 'response',
+      responseType: 'json'
+    }).subscribe(res => {
+      window.location.reload();
+    })
+  }
+
+  handleDate(event) {
+    this.date = event.target.value;
+  }
+
+  handleTime(event) {
+    this.time = event.target.value;
   }
 }

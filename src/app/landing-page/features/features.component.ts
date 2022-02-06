@@ -9,10 +9,10 @@ import {Feature} from "./feature.model";
 export class FeaturesComponent implements OnInit, AfterViewInit {
 
   features: Feature[] = [
-    new Feature('Marketplace for Pets', 'assets/images/shop.png'),
-    new Feature('Find Nearby Vets', 'assets/images/doctor.png'),
-    new Feature('Find if your pet is sick', 'assets/images/health.png'),
-    new Feature('Find other Pet Enthusiasts', 'assets/images/dog.png')
+    new Feature('Marketplace for Pets', 'assets/images/shop.png', '#features'),
+    new Feature('Dog Training Help', 'assets/images/doctor.png', 'https://petazon-dog-ml.surge.sh/'),
+    new Feature('Find if your pet is sick', 'assets/images/health.png', 'https://petazon-dog-sick-ml.surge.sh/ '),
+    new Feature('Find other Pet Enthusiasts', 'assets/images/dog.png', '#features')
   ]
 
   @ViewChild('business') business: ElementRef;
