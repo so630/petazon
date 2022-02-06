@@ -1,8 +1,71 @@
-<div>
+<div style="padding-bottom: 30px">
   <div class="relative bg-blueGray-100">
     <app-admin-navbar></app-admin-navbar>
-    <app-header-stats></app-header-stats>
-    <div class="px-4 md:px-10 mx-auto w-full -m-24">
+    <app-header-stats [type]="type"></app-header-stats>
+    <div class="relative inline-block px-4 md:px-10 mx-auto top-1/2 w-full -m-24 pb-8 align-top">
+      <div class="products-form p-8 block xl:inline-block w-full xl:w-3/5" >
+        <h6 class="uppercase text-blueGray-100 mb-1 text-xs font-semibold" style="color: rgba(241,245,249,1);">OVERVIEW</h6>
+        <h1 class="text-white text-xl font-semibold" style="color: rgba(241,245,249,1);">{{type === 'business' ? 'Products' : 'Purchases'}}</h1>
+        <div style="width: 100%; height: 80%; overflow-y: scroll; overflow-x: hidden" class="text-center" *ngIf="type === 'business'">
+          <app-item-card-dashboard type="product" [id]="item._id" [title]="item.name" [imageStr]="item.image_name" [desc]="item.desc" [sales]="item.sales" [price]="item.price" *ngFor="let item of products"></app-item-card-dashboard>
+        </div>
+        <div style="width: 100%; height: 80%; overflow-y: scroll; overflow-x: hidden" class="text-center inline-block" *ngIf="type === 'user'">
+          <app-item-card-dashboard type="product" [sales]="item.item" [id]="item.id" *ngFor="let item of ids"></app-item-card-dashboard>
+        </div>
+      </div>
+      <div class="bg-transparent xl:inline-block block xl:absolute xl:top-0 xl:ml-2 xl:mt-0 relative w-full xl:w-2/5">
+        <div class="bg-white rounded-t rounded-b mt-4 xl:mt-0 p-6 xl:w-full w-6/12 inline-block xl:block drop-shadow-md" style="height: 30.6rem" *ngIf="type === 'user'">
+          <h6 class="text-blueGray-700 text-xs font-semibold mb-0">TOPUP</h6>
+          <h1 class="text-white text-xl font-semibold" style="color: rgb(0,0,0);">Topup Your Balance</h1>
+          <form #t="ngForm" class="mt-4 h-4/5 relative" (submit)="topup()">
+            <label for="amount" class="block text-black text-md font-bold mb-2 mt-4">Enter the Amount To Topup: </label>
+            <input type="number" name="amount" id="amount" min="1" class="resize-none outline-2 outline-gray-700 border-2 focus:border focus:border-gray-700 text-gray-700 rounded-b rounded-t py-1 px-2 focus:outline-none focus:outline-blue-500 focus:transition-all w-20 overflow-x-auto" onkeypress="this.style.width = (((this.value.length + 1) * 16) + 25) + 'px'" required ngModel #amount="ngModel">
+
+            <button class="absolute bottom-0 right-4 mr-auto bg-blue-500 hover:bg-blue-700 active:bg-blue-800 disabled:hover:bg-blue-300 disabled:cursor-not-allowed disabled:bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" [disabled]="!t.valid">
+              Topup
+            </button>
+          </form>
+        </div>
+        <div routerLink="/marketplace/home" class="xl:w-full w-5/12 hover:cursor-pointer hover:bg-gray-100 active:bg-gray-200 ml-8 transition-all xl:ml-0 bg-white rounded-t rounded-b xl:mt-4 p-6 inline-block xl:inline-block xl:mt-0 drop-shadow-md" *ngIf="type === 'user'">
+          <h6 class="text-blueGray-700 text-xs font-semibold mb-0">MARKETPLACE</h6>
+          <h1 class="text-white text-xl font-semibold" style="color: rgb(0,0,0);">Go To Marketplace</h1>
+        </div>
+      </div>
+      <div class="products-form p-8 mt-8 mb-8 relative w-full xl:w-4/5" *ngIf="type === 'business'">
+        <h6 class="uppercase text-blueGray-100 mb-1 text-xs font-semibold" style="color: rgba(241,245,249,1);">FORM</h6>
+        <h1 class="text-white text-xl font-semibold" style="color: rgba(241,245,249,1);">Add Product</h1>
+        <form #f="ngForm" class="mt-4" (submit)="onSubmit()">
+          <label for="name" class="block text-white text-md font-bold mb-2">Name: </label>
+          <input type="text" id="name" name="name" class="rounded-b rounded-t h-8 py-2 px-2 focus:outline-none border-none focus:outline-blue-500 focus:transition-all w-2/5" required ngModel #name="ngModel">
+
+          <label for="desc" class="block text-white text-md font-bold mb-2 mt-4">Description: </label>
+          <textarea type="text" id="desc" name="desc" class="resize-none rounded-b rounded-t h-20 py-2 px-2 focus:outline-none border-none focus:outline-blue-500 focus:transition-all w-2/5" required ngModel #name="ngModel">
+          </textarea>
+
+          <label for="file" class="block mt-8 text-white bg-blue-500 hover:bg-blue-700 active:bg-blue-800 hover:cursor-pointer hover:transition-all active:transition-all w-fit rounded-b rounded-t py-2 px-4">
+            <input type="file" id="file" class="bg-white" accept="image/png, image/jpeg" style="background-color: #4daf7c" name="image" ngModel required #image="ngModel" (change)="fileChanged($event)">
+            Upload A Picture of Your Product!
+          </label>
+
+          <label for="price" class="block text-white text-md font-bold mb-2 mt-4">Price (in USD): </label>
+          <input type="number" name="price" id="price" min="1" class="resize-none rounded-b rounded-t py-1 px-2 focus:outline-none border-none focus:outline-blue-500 focus:transition-all w-20 overflow-x-auto" onkeypress="this.style.width = (((this.value.length + 1) * 16) + 25) + 'px'" required ngModel #price="ngModel">
+
+          <label for="category" class="block text-white text-md font-bold mb-2 mt-4">Category: </label>
+          <select name="category" id="category" class="rounded-b rounded-t py-1 px-2 focus:outline-none border-none hover:outline-blue-500 focus:outline-blue-500 transition-all" required ngModel #category="ngModel">
+            <option value="Food">Food</option>
+            <option value="Utensils">Utensils</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Health">Health</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Toys">Toys</option>
+          </select>
+
+
+          <button class=" absolute bottom-4 right-4 ml-auto mr-auto bg-blue-500 hover:bg-blue-700 active:bg-blue-800 disabled:hover:bg-blue-300 disabled:cursor-not-allowed disabled:bg-blue-300 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" [disabled]="!f.valid">
+            Upload
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>

@@ -21,8 +21,22 @@ export class AuthService {
       responseType: 'json',
       withCredentials: true
     }).subscribe(res => {
-      this.router.navigate(['/dashboard'])
+      this.router.navigate(['/dashboard/user'])
     });
+  }
+
+  loginBusiness(username, password) {
+    this.http.post('http://localhost:7000/business-login', {
+      username: username,
+      password: password
+    }, {
+      observe: 'response',
+      responseType: 'json',
+      withCredentials: true
+    }).subscribe(res => {
+      localStorage.setItem('business', 'true');
+      this.router.navigate(['/dashboard/business'])
+    })
   }
 
   register(username, password, name) {
@@ -36,10 +50,23 @@ export class AuthService {
       withCredentials: true
     }).subscribe(res => {
       console.log(res.body);
-      this.router.navigate(['/dashboard'])
+      this.router.navigate(['/dashboard/user'])
     });
+  }
 
-
+  registerBusiness(username, password, name) {
+    this.http.post('http://localhost:7000/business-register', {
+      username: username,
+      password: password,
+      name: name
+    }, {
+      observe: 'response',
+      responseType: 'json',
+      withCredentials: true
+    }).subscribe(res => {
+      localStorage.setItem('business', 'true');
+      this.router.navigate(['/dashboard/business'])
+    })
   }
 
   logout() {
@@ -49,6 +76,22 @@ export class AuthService {
     }).subscribe(res => {
       this.router.navigate(['/']);
     });
+  }
+
+  checkBusinessAuth() {
+    this.http.get('http://localhost:7000/business-authenticated', {
+      observe: 'response',
+      responseType: 'json',
+      withCredentials: true
+    }).subscribe(res => {
+      // @ts-ignore
+      if (!res.body.authenticated) {
+        localStorage.getItem('business') === 'true' ? window.location.replace('/business-login') : window.location.replace('/business-register');
+      } else {
+        // @ts-ignore
+        document.body.style = 'background-color: white;'
+      }
+    })
   }
 
   checkAuth() {
@@ -65,5 +108,14 @@ export class AuthService {
         document.body.style = 'background-color: white;'
       }
     })
+  }
+
+  businessLogout() {
+    this.http.post('http://localhost:7000/business-logout', {}, {
+      withCredentials: true,
+      observe: "response"
+    }).subscribe(res => {
+      this.router.navigate(['/']);
+    });
   }
 }

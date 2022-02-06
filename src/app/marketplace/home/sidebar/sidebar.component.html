@@ -1,0 +1,10 @@
+<div class="sidebar">
+  <div style="margin-top: 100px">
+    <div class="sidebar-item" routerLinkActive="selected" routerLink="/marketplace/home">
+      <h1>Home</h1>
+    </div>
+    <div [class]="'sidebar-item'" routerLinkActive="selected" *ngFor="let category of categories; let i = index" [routerLink]="'/marketplace/' + category">
+      <h1>{{category}}</h1>
+    </div>
+  </div>
+</div>

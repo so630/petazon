@@ -1,0 +1,21 @@
+<div class="card" [ngStyle]="{display: opacity}">
+  <div class="card-image" [ngStyle]="{background: 'url(http://localhost:7000/img/' + imageStr + ') bottom center no-repeat'}" style="background-size: contain">
+
+  </div>
+  <div class="card-text">
+    <span class="price">{{sales + (type === 'user' ? ' Times Bought' : ' Sales')}}</span>
+    <h2>{{title}}</h2>
+    <p>{{desc}}</p>
+  </div>
+  <div class="card-stats items-center">
+    <div class="stat text-center">
+      <div class="value">{{price}}$</div>
+      <div class="type">price</div>
+    </div>
+    <a class="h-full" style="border-bottom-right-radius: 15px" [href]="type === 'user' ? '/marketplace/'+category+'#'+id : '/dashboard/business'">
+      <div class="stat btn right" (click)="type !== 'user' ? delete() : null">
+        <div class="value">{{type !== 'user' ? 'Delete' : 'Go To Product'}}</div>
+      </div>
+    </a>
+  </div>
+</div>

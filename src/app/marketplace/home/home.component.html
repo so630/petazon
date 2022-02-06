@@ -1,40 +1,10 @@
-<div>
-  <div class="sidebar">
-    <div style="margin-top: 100px">
-      <div class="sidebar-item selected">
-        <h1>Sus</h1>
-      </div>
-      <div class="sidebar-item">
-        <h1>Sus</h1>
-      </div>
-      <div class="sidebar-item">
-        <h1>Sus</h1>
-      </div>
-      <div class="sidebar-item">
-        <h1>Sus</h1>
-      </div>
-    </div>
-  </div>
+<div id="wrapper">
+  <app-sidebar></app-sidebar>
+  <img src="assets/images/dog.png" class="rounded-full w-12 h-12 fixed top-6 right-8 bg-white hover:cursor-pointer" routerLink="/dashboard/user">
   <div class="list">
-    <h1 class="title">Title</h1>
-    <div class="cards">
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
-      <app-item-card title="sus" imageStr="assets/images/dog.png"></app-item-card>
+    <h1 class="title">{{title}}</h1>
+    <div class="cards text-center">
+      <app-item-card type="market" [id]="item._id" [title]="item.name" [imageStr]="item.image_name" [desc]="item.desc" [sales]="item.sales" [price]="item.price" *ngFor="let item of items"></app-item-card>
     </div>
   </div>
 </div>

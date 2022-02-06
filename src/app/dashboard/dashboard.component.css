@@ -8,3 +8,26 @@
   margin-top: 5px;
   display: inline;
 }
+
+.products-form {
+  height: 600px;
+
+  background-color: #334155;
+
+  border-radius: 5px;
+
+  box-shadow: 0px 6.7px 10.05px rgba(0, 0, 0, 0.1);
+}
+
+#file-upload-button {
+  background: #4daf7c;
+}
+
+input.ng-invalid.ng-touched, select.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+  transition: 0.2s ease;
+  outline: 2px solid rgb(239 68 68 / 1);
+}
+
+input[type="file"] {
+  display: none;
+}

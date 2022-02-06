@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+.card {
+  display: inline-grid;
+  grid-template-columns: 400px;
+  grid-template-rows: 210px 210px 80px;
+  grid-template-areas: "image" "text" "stats";
+  width: 400px;
+
+  margin-left: 30px;
+  margin-right: 30px;
+
+  font-family: roboto;
+  border-radius: 18px;
+  box-shadow: 0px 0px 33px rgba(0, 0, 0, 0.25);
+  text-align: center;
+
+  margin-top: 30px;
+
+  background: white;
+}
+
+.card-image {
+  grid-area: image;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  background-size: contain !important;
+}
+
+.card-text {
+  grid-area: text;
+}
+
+.card-text .price {
+  color: rgb(255, 7, 110);
+  font-size: 13px;
+}
+
+.card-text p {
+  color: grey;
+  font-size: 15px;
+  font-weight: 300;
+  margin-top: 25px;
+}
+
+.card-text h2 {
+  margin-top: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.card-stats {
+  grid-area: stats;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background: #89ABE3ff;
+}
+
+.card-stats .stat {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 10px;
+  color: white;
+}
+
+.card-stats .type {
+  font-size: 11px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.card-stats .value {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.card-stats .border {
+  border-left: 1px solid rgb(172, 26, 87);
+  border-right: 1px solid rgb(172, 26, 87);
+  border-top: 1px solid rgb(0, 0, 0, 0);
+  border-bottom: 1px solid rgb(0, 0, 0, 0);
+}
+
+.btn:hover {
+  cursor: pointer;
+  background: #7091c7;
+}
+
+.btn {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none;
+
+  text-align: center;
+
+  height: 100%;
+}
+
+.btn:active {
+  background: #4b5c79;
+  transition: 0.1s ease;
+}
+
+.btn:not(:active) {
+  transition: 0.1s ease;
+}
+
+.right {
+  border-bottom-right-radius: inherit;
+}
+
+.left {
+  border-bottom-left-radius: inherit;
+}

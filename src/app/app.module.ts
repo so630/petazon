@@ -23,15 +23,20 @@ import { HeaderStatsComponent } from './header-stats/header-stats.component';
 import { CardStatsComponent } from './card-stats/card-stats.component';
 import { HomeComponent } from './marketplace/home/home.component';
 import { ItemCardComponent } from './marketplace/item-card/item-card.component';
+import { BusinessRegisterComponent } from './auth/business-register/business-register.component';
+import { BusinessLoginComponent } from './auth/business-login/business-login.component';
+import { SidebarComponent } from './marketplace/home/sidebar/sidebar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ItemCardDashboardComponent } from './dashboard/item-card-dashboard/item-card-dashboard.component';
 
 const routes: Routes = [
   {path: '', component: LandingPageComponent},
   {path: 'sign-in', component: SignInComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'dashboard', component: DashboardComponent},
-  {path: 'marketplace', children: [
-      {path: 'home', component: HomeComponent}
-    ]}
+  {path: 'dashboard/:type', component: DashboardComponent},
+  {path: 'marketplace/:category', component: HomeComponent},
+  {path: 'business-login', component: BusinessLoginComponent},
+  {path: 'business-register', component: BusinessRegisterComponent}
 ];
 
 @NgModule({
@@ -53,14 +58,19 @@ const routes: Routes = [
     HeaderStatsComponent,
     CardStatsComponent,
     HomeComponent,
-    ItemCardComponent
+    ItemCardComponent,
+    BusinessRegisterComponent,
+    BusinessLoginComponent,
+    SidebarComponent,
+    ItemCardDashboardComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     RouterModule.forRoot(routes),
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule,
   ],
   providers: [AuthService],
   bootstrap: [AppComponent]

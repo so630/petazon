@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {CookieService} from "ngx-cookie-service";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
   selector: 'app-header-stats',
@@ -7,9 +10,47 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderStatsComponent implements OnInit {
 
-  constructor() { }
+  sales: string = '0';
+  revenue: string;
+
+  @Input() type: string;
+
+  constructor(private http: HttpClient, private cookieService: CookieService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    if (this.type === 'business') {
+      this.http.get('http://localhost:7000/sales/' + this.cookieService.get('id'), {
+        observe: 'response',
+        responseType: 'json'
+      }).subscribe(res => {
+        // @ts-ignore
+        if (!res.body.sales) {
+          this.sales = '0';
+        } else {
+          // @ts-ignore
+          this.sales = res.body.sales;
+        }
+
+      })
+
+      this.http.get('http://localhost:7000/revenue/' + this.cookieService.get('id'), {
+        observe: 'response',
+        responseType: 'json'
+      }).subscribe(res => {
+        // @ts-ignore
+        this.revenue = res.body.revenue;
+      })
+    } else {
+      this.http.get('http://localhost:7000/user/data/' + this.cookieService.get('id'), {
+        observe: 'response',
+        responseType: 'json'
+      }).subscribe(res => {
+        // @ts-ignore
+        this.revenue = res.body.balance;
+        // @ts-ignore
+        this.sales = res.body.products_bought;
+      })
+    }
   }
 
 }

@@ -1,4 +1,19 @@
-<div class="card">
-  <img [src]="imageStr" alt="">
-  <h1>{{ title }}</h1>
+<div class="card" [id]="id">
+  <div class="card-image" [ngStyle]="{background: 'url(http://localhost:7000/img/' + imageStr + ') bottom center no-repeat', backgroundSize: 'contain'}">
+
+  </div>
+  <div class="card-text">
+    <span class="price">{{sales}} Sales</span>
+    <h2>{{title}}</h2>
+    <p>{{desc}}</p>
+  </div>
+  <div class="card-stats items-center">
+    <div class="stat text-center">
+      <div class="value">{{price}}$</div>
+      <div class="type">price</div>
+    </div>
+    <div class="stat w-full" [class]="type === 'market' ? 'btn right' : null" (click)="buy()">
+      <div class="value" *ngIf="type === 'market'">Buy Now</div>
+    </div>
+  </div>
 </div>

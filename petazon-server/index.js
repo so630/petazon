@@ -6,11 +6,13 @@ const passport = require('passport')
 const passportLocalMongoose = require('passport-local-mongoose')
 const cookieSession = require('cookie-session')
 const cors = require('cors')
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser())
 app.use(session({
   name: 'session',
   secret: 'mylittlesecret',
@@ -35,7 +37,11 @@ mongoose.connect('mongodb://localhost:27017/petazonDB');
 
 const userSchema = new mongoose.Schema({
   username: String,
-  password: String
+  password: String,
+  name: String,
+  purchases: Array,
+  balance: Number,
+  todo: Array
 })
 
 userSchema.plugin(passportLocalMongoose);
@@ -48,18 +54,26 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.post('/register', (req, res) => {
-  User.register({username: req.body.username, active: false}, req.body.password, (err, user) => {
+  User.register({username: req.body.username, name: req.body.name, balance: 1000, active: false}, req.body.password, (err, user) => {
     if (err) {
       console.log(err)
       res.redirect('/')
     } else {
-      passport.authenticate('local', {}, () => {
-          console.log(req.isAuthenticated());
-      })(req, res, () => {
-        res.redirect('/dashboard');
+      req.login(user, (err) => {
+        if (err) {
+          console.log(err);
+          res.sendStatus(500)
+        } else {
+          passport.authenticate('local', {}, () => {
+            console.log(req.isAuthenticated());
+          })(req, res, () => {
+            res.redirect('/dashboard');
+          })
+          res.cookie('id', user._id)
+          res.json({user: user})
+          console.log(`registered ${user.username} as ${req.isAuthenticated()}`)
+        }
       })
-      res.json({user: user})
-      console.log(`registered ${user.username} as ${req.isAuthenticated()}`)
     }
   })
 })
@@ -78,6 +92,7 @@ app.post('/login', (req, res) => {
       passport.authenticate('local')(req, res, () => {
         User.find({username: user.username}, (err, result) => {
           let auth = req.isAuthenticated();
+          res.cookie('id', result[0]._id)
           res.json({user: result[0], auth: auth})
         })
       })
@@ -96,5 +111,58 @@ app.post('/logout', (req, res) => {
   req.logout();
   res.sendStatus(200);
 })
+
+app.post('/todo-add', (req, res) => {
+  let user_id = req.body.user_id;
+  user_id = user_id.substring(3, user_id.length-1);
+  let title = req.body.title;
+  let date = new Date(JSON.parse(req.body.date));
+  let type = req.body.type;
+  let todo_item;
+  todo_item = {title: title, time: date, type: type}
+
+  User.findById(user_id, (err, result) => {
+    if (err || result === null) {
+      console.log(result)
+      console.log(err)
+    } else {
+      User.findByIdAndUpdate(user_id, {$set: {todo: [...result.todo, todo_item]}}, {new: true}).then((docs) => {
+        if(docs) {
+          console.log(docs)
+          res.sendStatus(200)
+        } else {
+          console.log('huh?')
+        }
+      }).catch((err)=>{
+        console.log(err);
+      });
+    }
+  })
+})
+
+app.post('/delete-todo', (req, res) => {
+  let todo_index = req.body.index;
+  let user_id = req.body.user_id;
+
+  User.findById(user_id, (err, result) => {
+    if (err || result === null) {
+      console.log(result)
+      console.log(err)
+    } else {
+      console.log(result.todo.filter((vale, index) => index !== todo_index))
+      User.findByIdAndUpdate(user_id, {$set: {todo: result.todo.filter((vale, index) => index !== todo_index)}}, {new: true}).then((docs) => {
+        if(docs) {
+          console.log(docs)
+          res.sendStatus(200)
+        } else {
+          console.log('huh?')
+        }
+      }).catch((err)=>{
+        console.log(err);
+      });
+    }
+  })
+})
+
 
 app.listen(5000);

@@ -1,11 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 import {NgForm} from "@angular/forms";
-import { Observable, throwError } from "rxjs";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {AuthService} from "../auth.service";
 
 @Component({
-  selector: 'app-sign-in',
+  selector: 'app-register',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css']
 })
@@ -34,4 +33,5 @@ export class SignInComponent implements OnInit {
 
     this.authService.login(this.user.username, this.user.password);
   }
+
 }
