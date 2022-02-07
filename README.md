@@ -24,7 +24,7 @@
 Clone the project
 
 ```bash
-  git clone https://github.com/SabadModi/Petazon
+  git clone https://github.com/so630/petazon
 ```
 
 Go to the project directory
