@@ -29,10 +29,6 @@ Clone the project
 
 Go to the project directory
 
-```bash
-  cd Petazon-main
-```
-
 Install dependencies
 
 ```bash
@@ -43,6 +39,30 @@ Start the server and go to `http://localhost:4200/`
 
 ```bash
   ng serve
+```
+
+Then, open a new terminal tab and do
+
+```bash
+  cd petazon-server
+```
+
+and then run
+
+```bash
+  npm run dev
+```
+
+Then, open a new terminal, go to the root project folder, then do
+
+```bash
+  cd petazon-server/business-server
+```
+
+and then run
+
+```bash
+  npm run dev
 ```
 
 ## Authors
