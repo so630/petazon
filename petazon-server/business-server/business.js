@@ -223,7 +223,7 @@ app.post('/api/upload-product', upload.single('file'), (req, res) => {
     }
   })
 
-  res.sendStatus(200)
+  res.json({sus: 'amogus'})
 })
 
 app.get('/img/:id', (req, res) => {
@@ -324,7 +324,13 @@ app.post('/buy', (req, res) => {
           for (let i = 0; i < times; i++) {
             product_ids[i] = product_id
           }
-          User.findByIdAndUpdate(user_id, {$set: {purchases: [...data1.purchases, ...product_ids], balance: ((data1.balance !== undefined && (data1.balance >= data.price * times) ? data1.balance : 1000) - (data.price * times))}}, {new: true}).then((docs) => {
+
+          if (data1.balance >= data.price * times) {
+            res.json({error: 'insufficient balance'});
+            return;
+          }
+
+          User.findByIdAndUpdate(user_id, {$set: {purchases: [...data1.purchases, ...product_ids], balance: ((data1.balance !== undefined ? data1.balance : 1000) - (data.price * times))}}, {new: true}).then((docs) => {
             if(docs) {
               console.log(docs)
             } else {
@@ -352,7 +358,7 @@ app.post('/buy', (req, res) => {
       })
     }
   })
-  res.sendStatus(200)
+  res.json({sus: 'amogus'})
 })
 
 
@@ -424,6 +430,7 @@ app.post('/products/delete', (req, res) => {
           Business.findByIdAndUpdate(business_id, {$set: {products: l}}, {new: true}).then((docs) => {
               if(docs) {
                 console.log(docs)
+                res.json({sus: 'amogus'})
               } else {
                 console.log('huh?')
               }
@@ -436,14 +443,8 @@ app.post('/products/delete', (req, res) => {
     }, (err, doc) => {
     if (err) {
       console.log(err);
-    } else {
-      res.sendStatus(200)
     }
   })
-
-
-
-
 })
 
 app.get('/user/data/:id', (req, res) => {

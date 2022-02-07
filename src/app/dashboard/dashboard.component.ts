@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewRef} from '@angular/core';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
@@ -12,6 +12,7 @@ import {AuthService} from "../auth/auth.service";
 import {HttpClient} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {NgForm} from "@angular/forms";
+import {DashboardService} from "./dashboard.service";
 
 class ImageSnippet {
   constructor(public src: string, public file: File) {}
@@ -31,11 +32,16 @@ export class DashboardComponent implements OnInit, CanActivate {
   todo: any[];
 
 
-  constructor(private authService: AuthService, private http: HttpClient, private router: Router, private cookieService: CookieService, private route: ActivatedRoute) { }
+  constructor(private dashboardService: DashboardService, private authService: AuthService, private http: HttpClient, private router: Router, private cookieService: CookieService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     // @ts-ignore
     document.body.style = "background-color: white; opacity: 0";
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.dashboardService.todoChanged.subscribe(val => {
+      this.todo = val;
+    })
+
     this.route.params.subscribe((params: Params) => {
       this.type = params['type'];
       if (this.type === 'user') {
@@ -63,6 +69,40 @@ export class DashboardComponent implements OnInit, CanActivate {
           this.products = <{name, desc, image_name, price, sales, _id, business_id}[]>res.body;
         })
       }
+    })
+  }
+
+  reload() {
+    console.log('reload called');
+    this.http.get('http://localhost:5000/todo/'+this.cookieService.get('id'), {
+      observe: 'response',
+      responseType: 'json'
+    }).subscribe(res => {
+      // @ts-ignore
+      this.todo = res.body.todo;
+      console.log(this.todo);
+    })
+  }
+
+  @ViewChild('todoItems') todoItems: ViewContainerRef;
+  @ViewChild('vc') vc: ViewContainerRef;
+  childViewRef: ViewRef;
+
+  del = (index) => {
+    this.http.post('http://localhost:5000/delete-todo', {
+      index: index,
+      user_id: this.cookieService.get('id')
+    }, {
+      observe: 'response',
+      responseType: 'json'
+    }).subscribe(res => {
+      this.http.get('http://localhost:5000/todo/'+this.cookieService.get('id'), {
+        observe: 'response',
+        responseType: 'json'
+      }).subscribe(res => {
+        // @ts-ignore
+        this.todo = res.body.todo;
+      })
     })
   }
 
@@ -105,9 +145,34 @@ export class DashboardComponent implements OnInit, CanActivate {
       responseType: 'json'
     }).subscribe(res => {
       console.log(res)
+      this.authService.checkBusinessAuth();
+      this.http.get('http://localhost:7000/products/business/'+this.cookieService.get('id'), {
+        observe: 'response',
+        responseType: 'json'
+      }).subscribe(res => {
+        this.products = <{name, desc, image_name, price, sales, _id, business_id}[]>res.body;
+        console.log(this.products);
+      })
     });
+  }
 
-    window.location.replace('/dashboard/business')
+  reloadProducts = (id) => {
+    this.http.post('http://localhost:7000/products/delete', {
+      product_id: id,
+      business_id: this.cookieService.get('id')
+    }, {
+      observe: 'response',
+      responseType: 'json'
+    }).subscribe(res => {
+      console.log(res.body)
+      this.http.get('http://localhost:7000/products/business/'+this.cookieService.get('id'), {
+        observe: 'response',
+        responseType: 'json'
+      }).subscribe(res => {
+        this.products = <{name, desc, image_name, price, sales, _id, business_id}[]>res.body;
+        console.log(this.products);
+      })
+    })
   }
 
   fileChanged(image: any) {
@@ -150,7 +215,7 @@ export class DashboardComponent implements OnInit, CanActivate {
       observe: 'response',
       responseType: 'json'
     }).subscribe(res => {
-      window.location.reload();
+      this.reload();
     })
   }
 

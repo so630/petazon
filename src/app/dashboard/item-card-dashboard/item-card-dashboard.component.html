@@ -12,10 +12,13 @@
       <div class="value">{{price}}$</div>
       <div class="type">price</div>
     </div>
-    <a class="h-full" style="border-bottom-right-radius: 15px" [href]="type === 'user' ? '/marketplace/'+category+'#'+id : '/dashboard/business'">
-      <div class="stat btn right" (click)="type !== 'user' ? delete() : null">
-        <div class="value">{{type !== 'user' ? 'Delete' : 'Go To Product'}}</div>
+    <a class="h-full" style="border-bottom-right-radius: 15px" [href]="'/marketplace/'+category+'#'+id" *ngIf="type === 'user'">
+      <div class="stat btn right">
+        <div class="value">Go To Product</div>
       </div>
     </a>
+    <div class="stat btn right h-full" (click)="reload(id)" *ngIf="type === 'business'">
+      <div class="value">Delete</div>
+    </div>
   </div>
 </div>

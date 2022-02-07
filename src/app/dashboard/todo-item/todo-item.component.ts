@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 
@@ -14,21 +14,22 @@ export class TodoItemComponent implements OnInit {
   @Input() time: string;
   @Input() type: string;
   @Input() index: number;
+  @Input() reload: Function;
+  @Input() delete: Function;
+  edit: boolean = false;
+  @ViewChild('todo') todo: ElementRef;
 
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
   ngOnInit(): void {
   }
 
-  delete() {
-    this.http.post('http://localhost:5000/delete-todo', {
-      index: this.index,
-      user_id: this.cookieService.get('id')
-    }, {
-      observe: 'response',
-      responseType: 'json'
-    }).subscribe(res => {
-      window.location.reload()
-    })
+  check() {
+    !this.edit ? this.delete(this.index) : this.setEdit();
+  }
+
+  setEdit = () => {
+    this.edit = false;
+    console.log(this.edit);
   }
 }

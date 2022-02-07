@@ -18,6 +18,7 @@ export class ItemCardDashboardComponent implements OnInit {
   @Input() sales: number;
   @Input() type: string;
   @Input() id: string;
+  @Input() reload: Function;
   opacity: string = 'inline-grid';
   category: string;
 
@@ -55,15 +56,6 @@ export class ItemCardDashboardComponent implements OnInit {
   }
 
   delete() {
-    console.log(this.id)
-    this.http.post('http://localhost:7000/products/delete', {
-      product_id: this.id,
-      business_id: this.cookieService.get('id')
-    }, {
-      observe: 'response',
-      responseType: 'text'
-    }).subscribe(res => {
-      console.log(res.body)
-    })
+
   }
 }

@@ -15,7 +15,15 @@ export class MarketplaceService {
       user_id: user_id,
       product_id: product_id
     }, {
-      observe: 'response'
+      observe: 'response',
+      responseType: 'json'
+    }).subscribe(res => {
+      // @ts-ignore
+      if (res.body.error === 'insufficient balance') {
+        alert('You have insufficient balance to buy this product!')
+      } else {
+        alert('Product has been purchased');
+      }
     })
   }
 }

@@ -29,6 +29,7 @@ import { SidebarComponent } from './marketplace/home/sidebar/sidebar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ItemCardDashboardComponent } from './dashboard/item-card-dashboard/item-card-dashboard.component';
 import {TodoItemComponent} from "./dashboard/todo-item/todo-item.component";
+import { ReRenderDirective } from './re-render.directive';
 
 const routes: Routes = [
   {path: '', component: LandingPageComponent},
@@ -64,7 +65,8 @@ const routes: Routes = [
     BusinessLoginComponent,
     SidebarComponent,
     ItemCardDashboardComponent,
-    TodoItemComponent
+    TodoItemComponent,
+    ReRenderDirective
   ],
   imports: [
     BrowserModule,

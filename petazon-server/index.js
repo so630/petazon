@@ -171,6 +171,24 @@ app.post('/delete-todo', (req, res) => {
   })
 })
 
+app.post('/todo/edit', (req, res) => {
+  let user_id = req.params.id;
+  user_id = user_id.substring(3, user_id.length-1);
+  let title = req.params.title;
+  let date = req.params.date;
+  let time = req.params.time;
+  User.findByIdAndUpdate(user_id, {$set: {time: time, title: title, date: date}}, {new: true}).then(doc => {
+    if (doc) {
+      console.log(doc);
+      res.json({sus: 'amogus'})
+    } else {
+      console.log('error')
+    }
+  }).catch((err) => {
+    console.log(err);
+  });
+})
+
 app.get('/todo/:id', (req, res) => {
   let user_id = req.params.id;
   user_id = user_id.substring(3, user_id.length-1);
