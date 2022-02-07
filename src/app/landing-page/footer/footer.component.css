@@ -78,3 +78,21 @@ div {
   top: 43%;
   left: 10%;
 }
+
+@media (max-width: 1161px) {
+  .logo {
+    width: 150px;
+  }
+
+  .cr {
+    font-size: 12px;
+  }
+
+  div > h1 {
+    font-size: 40px;
+  }
+
+  .dog-footer {
+    width: 350px;
+  }
+}

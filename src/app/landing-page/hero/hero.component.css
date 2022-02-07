@@ -48,6 +48,41 @@
   font-size: 20px;
 }
 
+@media (max-width: 1031px) {
+
+  .header > div > h1 {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 44px;
+    line-height: 54px;
+  }
+  .header > div > p {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 818px) {
+
+  .header > div > h1 {
+    font-family: Roboto, sans-serif;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 54px;
+  }
+  .header > div > p {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+  }
+}
+
+
 .header-card {
   position: relative;
   right: 10%;
@@ -57,7 +92,7 @@
 .open {
   opacity: 1;
   right: 0;
-  transition: 1s ease;
+  transition: opacity 1s ease, right 1s ease;
 }
 
 .header-card > h1 {

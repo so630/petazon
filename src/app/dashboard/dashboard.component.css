@@ -31,3 +31,9 @@ input.ng-invalid.ng-touched, select.ng-invalid.ng-touched, textarea.ng-invalid.n
 input[type="file"] {
   display: none;
 }
+
+@media (min-width: 768px) {
+  .md\:bottom-80 {
+    bottom: 19.4rem;
+  }
+}

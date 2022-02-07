@@ -1,6 +1,6 @@
 <div class="business-card" [ngStyle]="{'background-image': 'url(' + image + ')'}">
   <div class="blur-background">
-    <h1>{{title}}</h1>
+    <h1>{{text === 'Sign in' ? 'Sign in to' : 'Register'}} {{title}}</h1>
     <p>{{desc}}</p>
     <button class="btn login" [routerLink]="link">{{text}}</button>
   </div>
