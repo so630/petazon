@@ -33,7 +33,7 @@ app.use(cors({
   credentials: true
 }))
 
-mongoose.connect('mongodb://localhost:27017/petazonDB');
+mongoose.connect('mongodb+srv://admin:admin@cluster0.rgrzw.mongodb.net/petazonDB');
 
 const userSchema = new mongoose.Schema({
   username: String,
@@ -65,13 +65,11 @@ app.post('/register', (req, res) => {
           res.sendStatus(500)
         } else {
           passport.authenticate('local', {}, () => {
-            console.log(req.isAuthenticated());
           })(req, res, () => {
             res.redirect('/dashboard');
           })
           res.cookie('id', user._id)
           res.json({user: user})
-          console.log(`registered ${user.username} as ${req.isAuthenticated()}`)
         }
       })
     }
@@ -102,8 +100,6 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/is-authenticated', (req, res) => {
-  console.log(req.isAuthenticated())
-
   res.json({auth: req.isAuthenticated()})
 })
 
@@ -129,15 +125,13 @@ app.post('/todo-add', (req, res) => {
 
   User.findById(user_id, (err, result) => {
     if (err || result === null) {
-      console.log(result)
       console.log(err)
     } else {
       User.findByIdAndUpdate(user_id, {$set: {todo: [...result.todo, todo_item]}}, {new: true}).then((docs) => {
         if(docs) {
-          console.log(docs)
-          res.json({sus: 'amogus'})
+          res.json({completed: 'true'})
         } else {
-          console.log('huh?')
+          console.log('error')
         }
       }).catch((err)=>{
         console.log(err);
@@ -150,20 +144,16 @@ app.post('/delete-todo', (req, res) => {
   let todo_index = req.body.index;
   let user_id = req.body.user_id;
   user_id = user_id.substring(3, user_id.length-1);
-  console.log(todo_index);
 
   User.findById(user_id, (err, result) => {
     if (err || result === null) {
-      console.log(result)
       console.log(err)
     } else {
-      console.log(result.todo.filter((vale, index) => index !== todo_index))
       User.findByIdAndUpdate(user_id, {$set: {todo: result.todo.filter((vale, index) => index !== todo_index)}}, {new: true}).then((docs) => {
         if(docs) {
-          console.log(docs)
-          res.json({sus: 'amogus'})
+          res.json({completed: 'true'})
         } else {
-          console.log('huh?')
+          console.log('error')
         }
       }).catch((err)=>{
         console.log(err);
@@ -180,8 +170,7 @@ app.post('/todo/edit', (req, res) => {
   let time = req.params.time;
   User.findByIdAndUpdate(user_id, {$set: {time: time, title: title, date: date}}, {new: true}).then(doc => {
     if (doc) {
-      console.log(doc);
-      res.json({sus: 'amogus'})
+      res.json({completed: 'true'})
     } else {
       console.log('error')
     }

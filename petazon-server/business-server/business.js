@@ -38,7 +38,7 @@ app.use(cors({
   credentials: true
 }))
 
-let conn = mongoose.createConnection('mongodb://localhost:27017/petazonDB', {useNewUrlParser: true, useUnifiedTopology: true});
+let conn = mongoose.createConnection('mongodb+srv://admin:admin@cluster0.rgrzw.mongodb.net/petazonDB', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const businessSchema = new mongoose.Schema({
   username: String,
@@ -70,14 +70,12 @@ app.post('/business-register', (req, res) => {
           return;
         }
         passport.authenticate('local', {}, () => {
-          console.log(req.isAuthenticated());
         })(req, res, () => {
           res.redirect('/dashboard');
         })
         res.cookie('business', true);
         res.cookie('id', business._id)
         res.json({business: business})
-        console.log(`registered ${business.username} as ${req.isAuthenticated()}`)
       })
     }
   })
@@ -115,7 +113,6 @@ app.get('/business-authenticated', (req, res) => {
 })
 
 app.post('/business-logout', (req, res) => {
-  console.log('logout')
   req.logout();
   res.sendStatus(200);
 })
@@ -153,7 +150,7 @@ const crypto = require('crypto')
 const path = require("path");
 
 const storage = new GridFsStorage({
-  url: 'mongodb://localhost:27017/petazonDB',
+  url: 'mongodb+srv://admin:admin@cluster0.rgrzw.mongodb.net/petazonDB',
   file: (req, file) => {
     return new Promise((resolve, reject) => {
       crypto.randomBytes(16, (err, buf) => {
@@ -192,7 +189,6 @@ const Product = conn.model('Product', productSchema);
 app.post('/api/upload-product', upload.single('file'), (req, res) => {
   let business_id = req.body.business_id;
   business_id = business_id.substring(3,req.body.business_id.length-1)
-  console.log(req.body)
   const product = new Product({
     sales: 0,
     price: Number(req.body.price),
@@ -202,7 +198,6 @@ app.post('/api/upload-product', upload.single('file'), (req, res) => {
     image_name: req.file.filename,
     category: req.body.category
   })
-  console.log(product);
   product.save();
 
   Business.findById(business_id, (err, result) => {
@@ -212,9 +207,8 @@ app.post('/api/upload-product', upload.single('file'), (req, res) => {
       if (result) {
         Business.findByIdAndUpdate(result._id, {$set: {products: [...result.products, product._id]}}, {new: true}).then((docs) => {
           if(docs) {
-            console.log(docs)
           } else {
-            console.log('huh?')
+            console.log('error')
           }
         }).catch((err)=>{
           console.log(err);
@@ -223,13 +217,12 @@ app.post('/api/upload-product', upload.single('file'), (req, res) => {
     }
   })
 
-  res.json({sus: 'amogus'})
+  res.json({completed: 'true'})
 })
 
 app.get('/img/:id', (req, res) => {
   gfs.files.findOne({filename: req.params.id}, (err, file) => {
     if (!file || file.length === 0) {
-      console.log(file)
       return res.status(404).json({
         err: 'No file exists'
       })
@@ -241,7 +234,6 @@ app.get('/img/:id', (req, res) => {
       const readstream = gfs.createReadStream(file.filename);
       readstream.pipe(res);
     } else {
-      console.log(file)
       res.status(404).json({
         err: 'Not an image'
       })
@@ -293,7 +285,7 @@ app.get('/products/:category', (req, res) => {
   })
 })
 
-mongoose.connect('mongodb://localhost:27017/petazonDB')
+mongoose.connect('mongodb+srv://admin:admin@cluster0.rgrzw.mongodb.net/petazonDB')
 const User = mongoose.model('User', new mongoose.Schema({username: String, name: String, purchases: Array, password: String, balance: Number, todo: Array}))
 
 app.post('/buy', (req, res) => {
@@ -309,17 +301,14 @@ app.post('/buy', (req, res) => {
         if (err) {
           console.log(err)
         } else {
-          console.log(data.sales+1)
           Product.findByIdAndUpdate(product_id, {$set: {sales: data.sales+times}}, {new: true}).then((docs) => {
             if(docs) {
-              console.log(docs)
             } else {
-              console.log('huh?')
+              console.log('error')
             }
           }).catch((err)=>{
             console.log(err);
           });
-          console.log(((data1.balance !== undefined ? data1.balance : 1000) - data.price))
           let product_ids = []
           for (let i = 0; i < times; i++) {
             product_ids[i] = product_id
@@ -332,9 +321,8 @@ app.post('/buy', (req, res) => {
 
           User.findByIdAndUpdate(user_id, {$set: {purchases: [...data1.purchases, ...product_ids], balance: ((data1.balance !== undefined ? data1.balance : 1000) - (data.price * times))}}, {new: true}).then((docs) => {
             if(docs) {
-              console.log(docs)
             } else {
-              console.log('huh?')
+              console.log('error')
             }
           }).catch((err)=>{
             console.log(err);
@@ -345,9 +333,8 @@ app.post('/buy', (req, res) => {
             } else {
               Business.findByIdAndUpdate(data.business_id, {$set: {revenue: result.revenue + (data.price * times), sales: ((result.sales ? result.sales : 0) + times)}}, {new: true}).then((docs) => {
                 if(docs) {
-                  console.log(docs)
                 } else {
-                  console.log('huh?')
+                  console.log('error')
                 }
               }).catch((err)=>{
                 console.log(err);
@@ -358,7 +345,7 @@ app.post('/buy', (req, res) => {
       })
     }
   })
-  res.json({sus: 'amogus'})
+  res.json({completed: 'true'})
 })
 
 
@@ -396,7 +383,6 @@ app.get('/revenue/:id', (req, res) => {
 app.get('/products/business/:id', (req, res) => {
   let id = req.params.id;
   id = id.substring(3,id.length-1)
-  console.log(id);
   Product.find({business_id: id}, (err, result) => {
     if (err) {
       console.log(err);
@@ -422,17 +408,13 @@ app.post('/products/delete', (req, res) => {
           res.sendStatus(500)
         } else {
           let l = result.products.filter(item => {
-            console.log(item._id, product_id)
-            console.log(item._id != product_id)
             return item._id != product_id
           })
-          console.log(l)
           Business.findByIdAndUpdate(business_id, {$set: {products: l}}, {new: true}).then((docs) => {
               if(docs) {
-                console.log(docs)
-                res.json({sus: 'amogus'})
+                res.json({completed: 'true'})
               } else {
-                console.log('huh?')
+                console.log('error')
               }
               }).catch((err)=>{
                 console.log(err);
@@ -485,7 +467,6 @@ app.get('/user/purchases/:id', (req, res) => {
           cleaned[m[item]]['item'] = cleaned[m[item]]['item'] + 1;
         }
       }
-      console.log(cleaned)
       res.json(cleaned)
     }
   })
@@ -515,12 +496,12 @@ app.post('/topup', (req, res) => {
       if(docs) {
         res.json({balance: docs.balance})
       } else {
-        console.log('huh?')
-        res.json({sus: 'amogus'})
+        console.log('error')
+        res.json({completed: 'true'})
       }
     }).catch((err)=>{
       console.log(err);
-      res.json({sus: 'amogus'})
+      res.json({completed: 'true'})
     });
   });
 })

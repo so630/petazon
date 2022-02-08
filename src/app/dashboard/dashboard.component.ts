@@ -131,6 +131,7 @@ export class DashboardComponent implements OnInit, CanActivate {
   }
   submitted: boolean;
   file: File;
+  loading: boolean;
 
   onSubmit() {
     this.submitted = true;
@@ -148,7 +149,7 @@ export class DashboardComponent implements OnInit, CanActivate {
     formData.append('desc', this.product.desc)
     formData.append('business_id', this.product.business_id)
     formData.append('category', this.product.category)
-
+    this.loading = true;
     this.http.post('http://localhost:7000/api/upload-product', formData, {
       observe: 'response',
       responseType: 'json'
@@ -161,6 +162,7 @@ export class DashboardComponent implements OnInit, CanActivate {
       }).subscribe(res => {
         this.products = <{name, desc, image_name, price, sales, _id, business_id}[]>res.body;
         console.log(this.products);
+        this.loading = false;
       })
     });
   }
