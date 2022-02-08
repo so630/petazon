@@ -60,6 +60,7 @@ export class DashboardComponent implements OnInit, CanActivate {
           responseType: 'json'
         }).subscribe(res => {
           this.ids = <{ item, id }[]>res.body;
+          console.log(this.ids);
         })
 
         this.http.get('http://localhost:5000/todo/'+this.cookieService.get('id'), {
@@ -163,6 +164,7 @@ export class DashboardComponent implements OnInit, CanActivate {
         this.products = <{name, desc, image_name, price, sales, _id, business_id}[]>res.body;
         console.log(this.products);
         this.loading = false;
+        window.location.reload();
       })
     });
   }

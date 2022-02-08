@@ -314,33 +314,33 @@ app.post('/buy', (req, res) => {
             product_ids[i] = product_id
           }
 
-          if (data1.balance >= data.price * times) {
-            res.json({error: 'insufficient balance'});
-            return;
-          }
-
-          User.findByIdAndUpdate(user_id, {$set: {purchases: [...data1.purchases, ...product_ids], balance: ((data1.balance !== undefined ? data1.balance : 1000) - (data.price * times))}}, {new: true}).then((docs) => {
-            if(docs) {
-            } else {
-              console.log('error')
-            }
-          }).catch((err)=>{
-            console.log(err);
-          });
-          Business.findById(data.business_id, (err, result) => {
-            if (err) {
+          if (data1.balance <= data.price * times) {
+            console.log('insufficient balance');
+          } else {
+            User.findByIdAndUpdate(user_id, {$set: {purchases: [...data1.purchases, ...product_ids], balance: ((data1.balance !== undefined ? data1.balance : 1000) - (data.price * times))}}, {new: true}).then((docs) => {
+              if(docs) {
+                console.log(docs);
+              } else {
+                console.log('error')
+              }
+            }).catch((err)=>{
               console.log(err);
-            } else {
-              Business.findByIdAndUpdate(data.business_id, {$set: {revenue: result.revenue + (data.price * times), sales: ((result.sales ? result.sales : 0) + times)}}, {new: true}).then((docs) => {
-                if(docs) {
-                } else {
-                  console.log('error')
-                }
-              }).catch((err)=>{
+            });
+            Business.findById(data.business_id, (err, result) => {
+              if (err) {
                 console.log(err);
-              });
-            }
-          })
+              } else {
+                Business.findByIdAndUpdate(data.business_id, {$set: {revenue: result.revenue + (data.price * times), sales: ((result.sales ? result.sales : 0) + times)}}, {new: true}).then((docs) => {
+                  if(docs) {
+                  } else {
+                    console.log('error')
+                  }
+                }).catch((err)=>{
+                  console.log(err);
+                });
+              }
+            })
+          }
         }
       })
     }

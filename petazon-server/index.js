@@ -184,7 +184,7 @@ app.get('/todo/:id', (req, res) => {
   user_id = user_id.substring(3, user_id.length-1);
 
   User.findById(user_id, (err, result) => {
-    if (err) {
+    if (err || result == null) {
       console.log(err);
     } else {
       res.json({todo: result.todo})

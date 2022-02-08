@@ -27,11 +27,15 @@ export class ItemCardComponent implements OnInit {
   buy() {
     let items = +prompt('Enter the amount of items you would like: ');
     console.log(items)
-    this.http.post('http://localhost:7000/buy', {user_id: this.cookieService.get('id'), product_id: this.id, items: items}, {
-      observe: 'response',
-      responseType: 'text'
-    }).subscribe(res => {
-      console.log('bought')
-    })
+    if (items === 0) {
+      alert('error! you have not specified an amount of items to buy!')
+    } else {
+      this.http.post('http://localhost:7000/buy', {user_id: this.cookieService.get('id'), product_id: this.id, items: items}, {
+        observe: 'response',
+        responseType: 'text'
+      }).subscribe(res => {
+        console.log('bought')
+      })
+    }
   }
 }
