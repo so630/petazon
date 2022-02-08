@@ -24,13 +24,7 @@
 Clone the project
 
 ```bash
-  git clone https://github.com/SabadModi/Petazon
-```
-
-Go to the project directory
-
-```bash
-  cd Petazon-main
+  git clone https://github.com/so630/petazon.git
 ```
 
 Install dependencies
@@ -39,11 +33,34 @@ Install dependencies
   npm install
 ```
 
-Start the server and go to `http://localhost:4200/`
+Start the angular cli server
 
 ```bash
   ng serve
 ```
+
+cd into the user server directory by typing
+
+```bash
+  cd petazon-server
+```
+
+and then running
+
+```bash
+  npm run dev
+```
+
+now go cd into the second server by typing
+
+```bash
+  cd business-server
+```
+
+now head on over to `http://localhost:4200/` and check out our website!
+
+PS: If you were unable to open the website here is a video explaining the process:
+[add video]
 
 ## Authors
 

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {CookieService} from "ngx-cookie-service";
 import {HttpClient} from "@angular/common/http";
 import {ActivatedRoute, Params} from "@angular/router";
@@ -21,6 +21,7 @@ export class ItemCardDashboardComponent implements OnInit {
   @Input() reload: Function;
   opacity: string = 'inline-grid';
   category: string;
+  @ViewChild('card') card: ElementRef;
 
 
   constructor(private cookieService: CookieService, private http: HttpClient, private route: ActivatedRoute) { }
@@ -52,10 +53,28 @@ export class ItemCardDashboardComponent implements OnInit {
           }
         })
       }
+
+      setTimeout(() => {
+        this.card.nativeElement.classList.remove('bottom-4');
+        this.card.nativeElement.classList.add('bottom-0');
+
+        this.card.nativeElement.classList.remove('opacity-0');
+        this.card.nativeElement.classList.add('opacity-1');
+      }, 100);
     })
   }
 
   delete() {
+    setTimeout(() => {
+      this.card.nativeElement.classList.remove('bottom-0');
+      this.card.nativeElement.classList.add('bottom-4');
 
+      this.card.nativeElement.classList.remove('opacity-1');
+      this.card.nativeElement.classList.add('opacity-0');
+    }, 100);
+
+    setTimeout(() => {
+      this.reload(this.id)
+    }, 200);
   }
 }

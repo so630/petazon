@@ -1,4 +1,4 @@
-<div class="card" [ngStyle]="{display: opacity}">
+<div #card class="card relative bottom-4 opacity-0 transition-all" [ngStyle]="{display: opacity}">
   <div class="card-image" [ngStyle]="{background: 'url(http://localhost:7000/img/' + imageStr + ') bottom center no-repeat'}" style="background-size: contain">
 
   </div>
@@ -17,7 +17,7 @@
         <div class="value">Go To Product</div>
       </div>
     </a>
-    <div class="stat btn right h-full" (click)="reload(id)" *ngIf="type === 'business'">
+    <div class="stat btn right h-full" (click)="delete()" *ngIf="type === 'business'">
       <div class="value">Delete</div>
     </div>
   </div>

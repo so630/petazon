@@ -513,12 +513,14 @@ app.post('/topup', (req, res) => {
   User.findById(user_id, (err, result) => {
     User.findByIdAndUpdate(user_id, {$set: {balance: result.balance + amount}}, {new: true}).then((docs) => {
       if(docs) {
-        console.log(docs)
+        res.json({balance: docs.balance})
       } else {
         console.log('huh?')
+        res.json({sus: 'amogus'})
       }
     }).catch((err)=>{
       console.log(err);
+      res.json({sus: 'amogus'})
     });
   });
 })

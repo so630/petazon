@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, OnInit, ViewChild} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {CookieService} from "ngx-cookie-service";
 import {ActivatedRoute} from "@angular/router";
@@ -10,10 +10,12 @@ import {ActivatedRoute} from "@angular/router";
 })
 export class HeaderStatsComponent implements OnInit {
 
-  sales: string = '0';
+  @Input() sales: string = '0';
   revenue: string;
 
   @Input() type: string;
+  @Input() event: EventEmitter<string>;
+  @ViewChild('balance') balance: ElementRef;
 
   constructor(private http: HttpClient, private cookieService: CookieService, private route: ActivatedRoute) { }
 
@@ -30,7 +32,6 @@ export class HeaderStatsComponent implements OnInit {
           // @ts-ignore
           this.sales = res.body.sales;
         }
-
       })
 
       this.http.get('http://localhost:7000/revenue/' + this.cookieService.get('id'), {
@@ -41,6 +42,21 @@ export class HeaderStatsComponent implements OnInit {
         this.revenue = res.body.revenue;
       })
     } else {
+
+      this.event.subscribe(next => {
+        setTimeout(() => {
+          this.balance.nativeElement.classList.add('opacity-0')
+          this.balance.nativeElement.classList.add('bottom-4')
+        }, 100);
+        setTimeout(() => {
+          this.revenue = next;
+        }, 150);
+        setTimeout(() => {
+          this.balance.nativeElement.classList.remove('opacity-0')
+          this.balance.nativeElement.classList.remove('bottom-4')
+        }, 400);
+      })
+
       this.http.get('http://localhost:7000/user/data/' + this.cookieService.get('id'), {
         observe: 'response',
         responseType: 'json'

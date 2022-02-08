@@ -4,7 +4,7 @@
     <div>
       <!-- Card stats -->
       <div class="flex flex-wrap">
-        <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
+        <div class="relative w-full lg:w-6/12 xl:w-3/12 px-4 transition-all bottom-0" #balance>
           <app-card-stats
             [statSubtitle]="type === 'business' ? 'REVENUE' : 'BALANCE'"
             [statTitle]="revenue + '$'"

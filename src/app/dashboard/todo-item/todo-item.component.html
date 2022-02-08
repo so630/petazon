@@ -1,8 +1,8 @@
-<div #todo class="relative py-4 px-8 w-4/5 inline-block text-left rounded-full shadow-md hover:shadow-lg transition-all my-4" style="background-color: #fff; color: #000000">
+<div #todo class="relative py-4 px-8 w-4/5 inline-block text-left rounded-full shadow-md hover:shadow-lg transition-all my-4 opacity-0 bottom-4" style="background-color: #fff; color: #000000">
   <h1 class="text-2xl block" *ngIf="!edit">{{title}}</h1>
   <p class="text-sm font-bold mb-0 ml-0.5 inline mr-2" *ngIf="!edit">{{type === 'recurring' ? time : time + " on " + date}}</p>
   <p class="text-xs font-bold mb-0 ml-0.5 inline" *ngIf="!edit">({{type}})</p>
-  <button class="absolute right-6 bottom-1/4 mt-2 hover:bg-gray-200 active:bg-gray-300 px-2 py-1 rounded-full transition-colors" (click)="delete(index)" *ngIf="!edit">
+  <button class="absolute right-6 bottom-1/4 mt-2 hover:bg-gray-200 active:bg-gray-300 px-2 py-1 rounded-full transition-colors" (click)="del()" *ngIf="!edit">
     <i class="far fa-trash-alt text-red-400"></i>
   </button>
 </div>

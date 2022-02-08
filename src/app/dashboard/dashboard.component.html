@@ -1,7 +1,7 @@
 <div style="padding-bottom: 30px">
   <div class="relative bg-blueGray-100">
     <app-admin-navbar></app-admin-navbar>
-    <app-header-stats [type]="type"></app-header-stats>
+    <app-header-stats [type]="type" [event]="topupEvent"></app-header-stats>
     <div class="relative inline-block px-4 md:px-10 mx-auto top-1/2 w-full -m-24 pb-8 align-top">
       <div class="products-form p-8 block xl:inline-block w-full xl:w-3/5" >
         <h6 class="uppercase text-blueGray-100 mb-1 text-xs font-semibold" style="color: rgba(241,245,249,1);">OVERVIEW</h6>
@@ -32,13 +32,13 @@
         </div>
       </div>
       <div *ngIf="type === 'user'">
-        <div class="bg-white p-6 max-h-80 drop-shadow-md w-2/3 mt-4 rounded-b rounded-t text-center py-4 overflow-y-auto inline-block transition-all" style="transition: 1s ease">
+        <div class="bg-white p-6 drop-shadow-md w-2/3 mt-4 rounded-b rounded-t text-center py-4 overflow-y-visible inline-block transition-all" style="transition: 1s ease">
           <h6 class="text-blueGray-700 text-xs font-semibold mb-0 text-left">DOG PLANNER</h6>
           <h1 class="text-white text-xl font-semibold text-left mb-4" style="color: rgb(0,0,0);">Check What You Have To Do</h1>
           <ng-container #vc></ng-container>
-          <ng-container *rerender="todo">
+          <div class="overflow-y-scroll h-52">
             <app-todo-item [title]="t.title" [date]="t.date" [time]="t.time" [delete]="del" [type]="t.type" [index]="i" *ngFor="let t of todo; let i = index"></app-todo-item>
-          </ng-container>
+          </div>
 
           <hr>
           <div class="text-left">

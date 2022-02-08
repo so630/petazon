@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild, ViewContainerRef, ViewRef} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  OnInit,
+  TemplateRef,
+  ViewChild,
+  ViewContainerRef,
+  ViewRef
+} from '@angular/core';
 import {
   ActivatedRoute,
   ActivatedRouteSnapshot,
@@ -180,19 +189,19 @@ export class DashboardComponent implements OnInit, CanActivate {
   }
 
   @ViewChild('t') t: NgForm;
+  topupEvent: EventEmitter<string> = new EventEmitter<string>();
 
   topup() {
     let amount = this.t.value.amount;
 
-    this.http.post('https://localhost:7000/topup', {
+    this.http.post('http://localhost:7000/topup', {
       user_id: this.cookieService.get('id'),
       amount: amount
     }, {
       observe: 'response',
       responseType: 'json'
     }).subscribe(res => {
-      // do nothing
-      this.t.reset();
+      this.topupEvent.emit(res.body['balance']);
     })
   }
 
