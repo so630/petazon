@@ -150,6 +150,7 @@ app.post('/delete-todo', (req, res) => {
   let todo_index = req.body.index;
   let user_id = req.body.user_id;
   user_id = user_id.substring(3, user_id.length-1);
+  console.log(todo_index);
 
   User.findById(user_id, (err, result) => {
     if (err || result === null) {

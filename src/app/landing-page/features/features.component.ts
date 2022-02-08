@@ -10,9 +10,9 @@ export class FeaturesComponent implements OnInit, AfterViewInit {
 
   features: Feature[] = [
     new Feature('Marketplace for Pets', 'assets/images/shop.png'),
-    new Feature('Find Nearby Vets', 'assets/images/doctor.png'),
+    new Feature('Help Train Your Dog', 'assets/images/trainer.png'),
     new Feature('Find if your pet is sick', 'assets/images/health.png'),
-    new Feature('Find other Pet Enthusiasts', 'assets/images/dog.png')
+    new Feature('Plan Tasks for Your Dog', 'assets/images/dog.png')
   ]
 
   @ViewChild('business') business: ElementRef;

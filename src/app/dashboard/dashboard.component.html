@@ -32,7 +32,7 @@
         </div>
       </div>
       <div *ngIf="type === 'user'">
-        <div class="bg-white p-6 max-h-80 drop-shadow-md w-2/3 mt-4 rounded-b rounded-t text-center py-4 overflow-y-auto inline-block">
+        <div class="bg-white p-6 max-h-80 drop-shadow-md w-2/3 mt-4 rounded-b rounded-t text-center py-4 overflow-y-auto inline-block transition-all" style="transition: 1s ease">
           <h6 class="text-blueGray-700 text-xs font-semibold mb-0 text-left">DOG PLANNER</h6>
           <h1 class="text-white text-xl font-semibold text-left mb-4" style="color: rgb(0,0,0);">Check What You Have To Do</h1>
           <ng-container #vc></ng-container>
@@ -60,7 +60,7 @@
               <option value="once">Once</option>
             </select>
             <label for="date" class="block text-left text-black text-md font-bold mb-2 mt-4">Enter the Date: </label>
-            <input type="date" id="date" name="date" class="focus:outline-none px-2 py-1 rounded disabled:cursor-not-allowed" (change)="handleDate($event)" [required]="typeSelector.value === 'recurring' || typeSelector.value === ''" [disabled]="typeSelector.value === 'recurring' || typeSelector.value === ''" ngModel>
+            <input type="date" id="date" name="date" class="focus:outline-none px-2 py-1 rounded disabled:cursor-not-allowed" (change)="handleDate($event)" [required]="!(typeSelector.value === 'recurring' || typeSelector.value === '')" [disabled]="typeSelector.value === 'recurring' || typeSelector.value === ''" ngModel>
             <label for="time" class="block text-left text-black text-md font-bold mb-2 mt-4">Enter the time: </label>
             <input type="time" id="time" name="time" value="now" class="focus:outline-none block px-2 py-1 rounded" (change)="handleTime($event)" required ngModel>
             <label for="date" class="block text-left text-black text-md font-bold mb-2 mt-4">Enter the Title: </label>
