@@ -53,7 +53,7 @@ Start the angular cli server
 ```bash
 ng serve
 ```
-now open another terminal tab, or another terminal window
+now open another terminal tab, or another terminal window<br>
 cd into the user server directory by typing
 
 ```bash
@@ -71,7 +71,7 @@ and then running
 ```bash
 node index.js
 ```
-now open another terminal tab, or another terminal window
+now open another terminal tab, or another terminal window<br>
 now go cd into the second server by typing
 (make sure you are in the root of the project folder before typing this)
 ```bash
