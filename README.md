@@ -2,7 +2,7 @@
 
 > A Web App that redefines your life as a pet owner, helping you in simplifying your daily life with your pets.
 
-### 🏠 [Homepage](https://github.com/SabadModi/Petazon)
+### 🏠 [Homepage](https://github.com/so630/petazon)
 
 # Features
 - Marketplace
