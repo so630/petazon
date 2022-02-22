@@ -17,25 +17,21 @@ export class ItemCardComponent implements OnInit {
   @Input() sales: number;
   @Input() type: string;
   @Input() id: string;
+  isBuy: boolean;
+  user_id: string;
 
 
   constructor(private cookieService: CookieService, private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.user_id = this.cookieService.get('id')
   }
 
   buy() {
-    let items = +prompt('Enter the amount of items you would like: ');
-    console.log(items)
-    if (items === 0) {
-      alert('error! you have not specified an amount of items to buy!')
-    } else {
-      this.http.post('http://localhost:7000/buy', {user_id: this.cookieService.get('id'), product_id: this.id, items: items}, {
-        observe: 'response',
-        responseType: 'text'
-      }).subscribe(res => {
-        console.log('bought')
-      })
-    }
+    this.isBuy = true;
+  }
+
+  closeModal = () => {
+    this.isBuy = false;
   }
 }

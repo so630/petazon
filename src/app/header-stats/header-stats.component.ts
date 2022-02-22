@@ -47,7 +47,7 @@ export class HeaderStatsComponent implements OnInit {
         setTimeout(() => {
           this.balance.nativeElement.classList.add('opacity-0')
           this.balance.nativeElement.classList.add('bottom-4')
-        }, 100);
+        }, 1);
         setTimeout(() => {
           this.revenue = next;
         }, 150);

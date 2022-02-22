@@ -6,11 +6,15 @@
       <div class="products-form p-8 block xl:inline-block w-full xl:w-3/5" >
         <h6 class="uppercase text-blueGray-100 mb-1 text-xs font-semibold" style="color: rgba(241,245,249,1);">OVERVIEW</h6>
         <h1 class="text-white text-xl font-semibold" style="color: rgba(241,245,249,1);">{{type === 'business' ? 'Products' : 'Purchases'}}</h1>
-        <div style="width: 100%; height: 80%; overflow-y: scroll; overflow-x: hidden" class="text-center" *ngIf="type === 'business' && !loading">
+        <div style="width: 100%; height: 80%; overflow-y: scroll; overflow-x: hidden" class="text-center" *ngIf="type === 'business' && !loading && products.length != 0">
           <app-item-card-dashboard type="product" [type]="type" [reload]="reloadProducts" [id]="item._id" [title]="item.name" [imageStr]="item.image_name" [desc]="item.desc" [sales]="item.sales" [price]="item.price" *ngFor="let item of products"></app-item-card-dashboard>
         </div>
         <div style="width: 100%; height: 80%; overflow-y: scroll; overflow-x: hidden" class="text-center" *ngIf="type === 'business' && loading">
           <img src="assets/images/loading.svg" alt="loading..." class="block ml-auto mr-auto">
+        </div>
+        <div style="width: 100%; height: 80%; overflow-y: scroll; overflow-x: hidden" class="text-center" *ngIf="type === 'business' && !loading && products.length == 0">
+          <img src="assets/images/nothing.png" alt="No Products for Business" class="block ml-auto mr-auto w-32 h-32 mt-32">
+          <h1 class="mt-4 text-white text-xl font-bold">No Products Found</h1>
         </div>
         <div style="width: 100%; height: 80%; overflow-y: scroll; overflow-x: hidden" class="text-center inline-block" *ngIf="type === 'user'">
           <app-item-card-dashboard type="product" [sales]="item.item" [id]="item.id" *ngFor="let item of ids"></app-item-card-dashboard>

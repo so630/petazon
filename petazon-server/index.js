@@ -30,7 +30,7 @@ app.use(passport.session());
 app.use(cors({
   origin: "http://localhost:4200",
   methods: ["POST", "PUT", "GET", "OPTIONS", "HEAD"],
-  credentials: true
+  credentials: true,
 }))
 
 mongoose.connect('mongodb+srv://admin:admin@cluster0.rgrzw.mongodb.net/petazonDB');

@@ -1,0 +1,23 @@
+<div class="fixed w-full h-full top-0 right-0 transition-all text-center" style="background-color: rgba(96,96,96,0.51)">
+  <div class="relative inline-block h-60 bg-white opacity-0 transition-all rounded shadow" style="width: 20rem" #modal>
+
+    <h1 class="font-bold text-left mt-4 ml-4">Buy "{{ name }}"</h1>
+    <div id="body" class="w-full mt-6 text-left px-4">
+      <div class="relative z-0 mb-6 w-full group">
+        <input type="number" (change)="handleAmountChange($event)" name="floating_email" id="floating_email" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+        <label for="floating_email" class="absolute text-sm text-gray-500 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Amount</label>
+        <p class="text-xs text-red-400 absolute text-center w-full mt-2" *ngIf="invalid">Please fill the amount!</p>
+      </div>
+    </div>
+    <div class="absolute flex bottom-0 w-full h-10 mb-2 align-bottom">
+      <div class="w-3/4 block ml-auto text-right">
+        <button (click)="handleClose()" class="transition-all bg-transparent border border-black text-black hover:bg-black hover:text-white text-center px-4 rounded" style="padding-top: 6px; padding-bottom: 6px;">
+          Cancel
+        </button>
+        <button (click)="handleSubmit()" class="relative ml-2 mr-2 transition-all bg-blue-500 hover:bg-blue-700 text-white text-center py-2 px-4 rounded" style="padding-top: 8.3px; padding-bottom: 6.5px; top: 0.4px;">
+          Buy
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

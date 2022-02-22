@@ -157,19 +157,21 @@ export class DashboardComponent implements OnInit, CanActivate {
     }).subscribe(res => {
       console.log(res)
       this.authService.checkBusinessAuth();
-      this.http.get('http://localhost:7000/products/business/'+this.cookieService.get('id'), {
-        observe: 'response',
-        responseType: 'json'
-      }).subscribe(res => {
-        this.products = <{name, desc, image_name, price, sales, _id, business_id}[]>res.body;
-        console.log(this.products);
-        this.loading = false;
-        window.location.reload();
-      })
+      setTimeout(() => {
+        this.http.get('http://localhost:7000/products/business/'+this.cookieService.get('id'), {
+          observe: 'response',
+          responseType: 'json'
+        }).subscribe(res => {
+          this.products = <{name, desc, image_name, price, sales, _id, business_id}[]>res.body;
+          console.log(this.products);
+          this.loading = false;
+        })
+      }, 500);
     });
   }
 
   reloadProducts = (id) => {
+    this.loading = true;
     this.http.post('http://localhost:7000/products/delete', {
       product_id: id,
       business_id: this.cookieService.get('id')
@@ -184,6 +186,7 @@ export class DashboardComponent implements OnInit, CanActivate {
       }).subscribe(res => {
         this.products = <{name, desc, image_name, price, sales, _id, business_id}[]>res.body;
         console.log(this.products);
+        this.loading = false;
       })
     })
   }

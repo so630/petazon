@@ -30,6 +30,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ItemCardDashboardComponent } from './dashboard/item-card-dashboard/item-card-dashboard.component';
 import {TodoItemComponent} from "./dashboard/todo-item/todo-item.component";
 import { ReRenderDirective } from './re-render.directive';
+import { BuyModalComponent } from './modals/buy-modal/buy-modal.component';
 
 const routes: Routes = [
   {path: '', component: LandingPageComponent},
@@ -66,7 +67,8 @@ const routes: Routes = [
     SidebarComponent,
     ItemCardDashboardComponent,
     TodoItemComponent,
-    ReRenderDirective
+    ReRenderDirective,
+    BuyModalComponent
   ],
   imports: [
     BrowserModule,
